@@ -13,7 +13,7 @@ class Cube : public Object
 {
 private:
 	GLuint VAO;
-	GLuint VBO, EBO;
+	GLuint VBO, EBO, cubemapTexture;
 
 public:
 	Cube(float size);

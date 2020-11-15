@@ -88,11 +88,11 @@ Cube::Cube(float size)
 		"skybox/PalldioPalace_extern_right.jpg",
 		"skybox/PalldioPalace_extern_left.jpg",
 		"skybox/PalldioPalace_extern_top.jpg",
-		"skybox/PalldioPalace_extern_bottom.jpg",
+		"skybox/PalldioPalace_extern_base.jpg",
 		"skybox/PalldioPalace_extern_front.jpg",
 		"skybox/PalldioPalace_extern_back.jpg"
 	};
-	unsigned int cubemapTexture = loadCubemap(faces);
+	cubemapTexture = loadCubemap(faces);
 }
 
 Cube::~Cube()
@@ -111,10 +111,13 @@ void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shade
 	// Get the shader variable locations and send the uniform data to the shader
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, false, glm::value_ptr(model));
 	
-
-	// Bind the VAO
+	glDepthMask(GL_FALSE);
 	glBindVertexArray(VAO);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDepthMask(GL_TRUE);
 
 	// Draw the points using triangles, indexed with the EBO
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
