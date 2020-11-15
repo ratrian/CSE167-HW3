@@ -119,8 +119,8 @@ void LightSource::draw(GLuint shaderProgram, glm::mat4 C)
 	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(C));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(C));
+	/*glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(C));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(C));*/
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 	pointLight->sendLightToShader(shaderProgram);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawSphere"), 1.0);
