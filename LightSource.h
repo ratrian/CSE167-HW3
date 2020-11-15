@@ -30,8 +30,8 @@ public:
 	LightSource(std::string objFilename, PointLight* pointLight);
 	~LightSource();
 
-	void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shader);
-	void update();
+	void draw(GLuint shaderProgram, glm::mat4 C);
+	void update(glm::mat4 C);
 	void orbit(glm::vec3 direction, float rotAngle, glm::vec3 rotAxis);
 	void move(glm::vec3 t);
 };

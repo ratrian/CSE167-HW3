@@ -21,9 +21,8 @@ public:
 	glm::mat4 getModel() { return model; }
 	glm::vec3 getColor() { return color; }
 
-	virtual void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shader) = 0;
-	virtual void update() = 0;
+	virtual void draw(GLuint shaderProgram, glm::mat4 C) = 0;
+	virtual void update(glm::mat4 C) = 0;
 };
 
 #endif
-

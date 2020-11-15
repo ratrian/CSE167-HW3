@@ -5,7 +5,7 @@
 #include "shader.h"
 #include "Object.h"
 #include "Cube.h"
-#include "PointCloud.h"
+#include "Geometry.h"
 
 class Window
 {
@@ -23,9 +23,9 @@ public:
 	static LightSource* lightSource;
 
 	// Objects to Render
-	static PointCloud* bunnyPoints;
-	static PointCloud* sandalPoints;
-	static PointCloud* bearPoints;
+	static Geometry* bunnyPoints;
+	static Geometry* sandalPoints;
+	static Geometry* bearPoints;
 
 	static GLfloat normalColoring;
 

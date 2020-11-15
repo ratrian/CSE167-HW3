@@ -18,10 +18,10 @@ PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
 // Objects to Render
-PointCloud* Window::bunnyPoints;
-PointCloud* Window::sandalPoints;
-PointCloud* Window::bearPoints;
-PointCloud* currPointCloud;
+Geometry* Window::bunnyPoints;
+Geometry* Window::sandalPoints;
+Geometry* Window::bearPoints;
+Geometry* currGeometry;
 
 GLfloat Window::normalColoring = 1.0;
 GLfloat pointSize;
@@ -65,12 +65,12 @@ bool Window::initializeObjects()
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Create point clouds consisting of objects vertices.
-	bunnyPoints = new PointCloud("bunny.obj", pointSize, normalColoring, bunnyPointsMaterial);
-	sandalPoints = new PointCloud("sandal.obj", pointSize, normalColoring, sandalPointsMaterial);
-	bearPoints = new PointCloud("bear.obj", pointSize, normalColoring, bearPointsMaterial);
+	bunnyPoints = new Geometry("bunny.obj", pointSize, normalColoring, bunnyPointsMaterial);
+	sandalPoints = new Geometry("sandal.obj", pointSize, normalColoring, sandalPointsMaterial);
+	bearPoints = new Geometry("bear.obj", pointSize, normalColoring, bearPointsMaterial);
 
 	// Set bunny to be the first to display
-	currPointCloud = bunnyPoints;
+	currGeometry = bunnyPoints;
 
 	return true;
 }
@@ -170,18 +170,13 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 void Window::idleCallback()
 {
 	// Perform any necessary updates here 
-	currPointCloud->update();
+	
 }
 
 void Window::displayCallback(GLFWwindow* window)
 {	
 	// Clear the color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-
-	// Render the objects
-	currPointCloud->draw(view, projection, shaderProgram);
-
-	lightSource->draw(view, projection, shaderProgram);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
@@ -206,23 +201,23 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			glfwSetWindowShouldClose(window, GL_TRUE);				
 			break;
 
-		// switch between the cube and the cube pointCloud
+		// switch between the cube and the cube Geometry
 		case GLFW_KEY_F1:
-			currPointCloud = bunnyPoints;
+			currGeometry = bunnyPoints;
 			break;
 		case GLFW_KEY_F2:
-			currPointCloud = sandalPoints;
+			currGeometry = sandalPoints;
 			break;
 		case GLFW_KEY_F3:
-			currPointCloud = bearPoints;
+			currGeometry = bearPoints;
 			break;
 		case GLFW_KEY_S:
 			pointSize = pointSize / 2;
-			currPointCloud->updatePointSize(pointSize);
+			currGeometry->updatePointSize(pointSize);
 			break;
 		case GLFW_KEY_L:
 			pointSize = pointSize * 2;
-			currPointCloud->updatePointSize(pointSize);
+			currGeometry->updatePointSize(pointSize);
 			break;
 		case GLFW_KEY_N:
 			if (normalColoring == 0.0) {
@@ -231,7 +226,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			else if (normalColoring == 1.0) {
 				normalColoring = 0.0;
 			}
-			currPointCloud->updateNormalColoring(normalColoring);
+			currGeometry->updateNormalColoring(normalColoring);
 			break;
 		case GLFW_KEY_1:
 			actionObject = true;
@@ -280,7 +275,7 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 			float rotAngle = velocity * 0.05;
 			glm::vec3 rotAxis = glm::cross(lastPoint, currPoint);
 			if (actionObject)
-				currPointCloud->spin(rotAngle, rotAxis);
+				currGeometry->spin(rotAngle, rotAxis);
 			if (actionLightSource)
 				lightSource->orbit(direction, rotAngle, rotAxis);
 		}
@@ -292,7 +287,7 @@ void Window::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
 	glMatrixMode(GL_PROJECTION);
 	if (actionObject)
-		currPointCloud->zoom(glm::vec3(1.0 + yOffset * 0.01));
+		currGeometry->zoom(glm::vec3(1.0 + yOffset * 0.01));
 	if (actionLightSource)
 		lightSource->move(glm::vec3(yOffset * 0.01));
 }

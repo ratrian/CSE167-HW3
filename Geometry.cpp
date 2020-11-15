@@ -1,6 +1,6 @@
-#include "PointCloud.h"
+#include "Geometry.h"
 
-PointCloud::PointCloud(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material)
+Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material)
 	: pointSize(pointSize), normalColoring(normalColoring), material(material)
 {
 	/*
@@ -160,25 +160,25 @@ PointCloud::PointCloud(std::string objFilename, GLfloat pointSize, GLfloat norma
 	glBindVertexArray(0);
 }
 
-PointCloud::~PointCloud() 
+Geometry::~Geometry() 
 {
 	// Delete the VBO and the VAO.
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
 }
 
-void PointCloud::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shader)
+void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 {
 	// Actiavte the shader program 
-	glUseProgram(shader);
+	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
-	glUniformMatrix4fv(glGetUniformLocation(shader, "view"), 1, false, glm::value_ptr(view));
-	glUniformMatrix4fv(glGetUniformLocation(shader, "projection"), 1, false, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, glm::value_ptr(model));
-	glUniform1f(glGetUniformLocation(shader, "pointSize"), pointSize);
-	glUniform1f(glGetUniformLocation(shader, "normalColoring"), normalColoring);
-	material->sendMatToShader(shader);
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(C));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(C));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	glUniform1f(glGetUniformLocation(shaderProgram, "pointSize"), pointSize);
+	glUniform1f(glGetUniformLocation(shaderProgram, "normalColoring"), normalColoring);
+	material->sendMatToShader(shaderProgram);
 
 	// Bind the VAO
 	glBindVertexArray(VAO);
@@ -191,13 +191,13 @@ void PointCloud::draw(const glm::mat4& view, const glm::mat4& projection, GLuint
 	glUseProgram(0);
 }
 
-void PointCloud::update()
+void Geometry::update(glm::mat4 C)
 {
 	// Spin the cube by 1 degree
 	spin(0.1f, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-void PointCloud::updatePointSize(GLfloat size) 
+void Geometry::updatePointSize(GLfloat size) 
 {
 	/*
 	 * TODO: Section 3: Implement this function to adjust the point size.
@@ -205,19 +205,19 @@ void PointCloud::updatePointSize(GLfloat size)
 	pointSize = size;
 }
 
-void PointCloud::updateNormalColoring(GLfloat normalColoring)
+void Geometry::updateNormalColoring(GLfloat normalColoring)
 {
-	PointCloud::normalColoring = normalColoring;
+	Geometry::normalColoring = normalColoring;
 }
 
-void PointCloud::spin(float rotAngle, glm::vec3 rotAxis)
+void Geometry::spin(float rotAngle, glm::vec3 rotAxis)
 {
 	// Update the model matrix by multiplying a rotation matrix
 	glm::mat4 m = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
 	model = m * model;
 }
 
-void PointCloud::zoom(glm::vec3 s)
+void Geometry::zoom(glm::vec3 s)
 {
 	model = glm::scale(model, s);
 }

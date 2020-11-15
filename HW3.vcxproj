@@ -104,9 +104,10 @@
     <ClCompile Include="LightSource.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
-    <ClCompile Include="PointCloud.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -114,10 +115,12 @@
     <ClInclude Include="LightSource.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="PointCloud.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,9 @@
-#ifndef _POINT_CLOUD_H_
-#define _POINT_CLOUD_H_
+#ifndef _GEOMETRY_H_
+#define _GEOMETRY_H_
 
 #include "Object.h"
+#include "Node.h"
+
 #include "Material.h"
 #include "LightSource.h"
 
@@ -14,7 +16,7 @@
 
 using namespace std;
 
-class PointCloud : public Object
+class Geometry : public Object, public Node
 {
 private:
 	std::vector<glm::vec3> points;
@@ -27,11 +29,11 @@ private:
 	Material* material;
 
 public:
-	PointCloud(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material);
-	~PointCloud();
+	Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material);
+	~Geometry();
 	
-	void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shader);
-	void update();
+	void draw(GLuint shaderProgram, glm::mat4 C);
+	void update(glm::mat4 C);
 
 	void updatePointSize(GLfloat size);
 	void updateNormalColoring(GLfloat normalColoring);
