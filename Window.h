@@ -26,6 +26,7 @@ public:
 	static Geometry* bunnyPoints;
 	static Geometry* sandalPoints;
 	static Geometry* bearPoints;
+	static Cube* cube;
 
 	static GLfloat normalColoring;
 

@@ -21,6 +21,8 @@ LightSource* Window::lightSource;
 Geometry* Window::bunnyPoints;
 Geometry* Window::sandalPoints;
 Geometry* Window::bearPoints;
+Cube* Window::cube;
+
 Geometry* currGeometry;
 
 GLfloat Window::normalColoring = 1.0;
@@ -69,6 +71,8 @@ bool Window::initializeObjects()
 	sandalPoints = new Geometry("sandal.obj", pointSize, normalColoring, sandalPointsMaterial);
 	bearPoints = new Geometry("bear.obj", pointSize, normalColoring, bearPointsMaterial);
 
+	cube = new Cube(5);
+
 	// Set bunny to be the first to display
 	currGeometry = bunnyPoints;
 
@@ -88,6 +92,7 @@ void Window::cleanUp()
 	delete bunnyPoints;
 	delete sandalPoints;
 	delete bearPoints;
+	delete cube;
 
 	// Delete the shader program.
 	glDeleteProgram(shaderProgram);
@@ -176,7 +181,9 @@ void Window::idleCallback()
 void Window::displayCallback(GLFWwindow* window)
 {	
 	// Clear the color and depth buffers
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
