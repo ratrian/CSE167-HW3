@@ -153,7 +153,7 @@ void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shade
 	glDepthMask(GL_TRUE);
 
 	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	glCullFace(GL_BACK);
 
 	// Unbind the VAO and shader program
 	glBindVertexArray(0);

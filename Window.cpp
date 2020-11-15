@@ -89,7 +89,7 @@ bool Window::initializeObjects()
 	// Set bunny to be the first to display
 	currGeometry = bunnyPoints;
 
-	cube = new Cube(10);
+	cube = new Cube(1000);
 
 	currObj = cube;
 
