@@ -92,6 +92,7 @@ void Window::cleanUp()
 	delete bunnyPoints;
 	delete sandalPoints;
 	delete bearPoints;
+
 	delete cube;
 
 	// Delete the shader program.
