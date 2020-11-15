@@ -25,6 +25,8 @@ Geometry* currGeometry;
 
 Cube* Window::cube;
 
+Object* currObj;
+
 GLfloat Window::normalColoring = 1.0;
 GLfloat pointSize;
 
@@ -41,6 +43,9 @@ glm::mat4 Window::view = glm::lookAt(Window::eyePos, Window::lookAtPoint, Window
 // Shader Program ID
 GLuint Window::shaderProgram;
 
+// Skybox Shader Program ID
+GLuint Window::skyboxShaderProgram;
+
 bool Window::initializeProgram() {
 	// Create a shader program with a vertex shader and a fragment shader.
 	shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
@@ -49,6 +54,16 @@ bool Window::initializeProgram() {
 	if (!shaderProgram)
 	{
 		std::cerr << "Failed to initialize shader program" << std::endl;
+		return false;
+	}
+
+	// Create a skybox shader program with a vertex shader and a fragment shader.
+	skyboxShaderProgram = LoadShaders("shaders/skybox.vert", "shaders/skybox.frag");
+
+	// Check the shader program.
+	if (!skyboxShaderProgram)
+	{
+		std::cerr << "Failed to initialize skybox shader program" << std::endl;
 		return false;
 	}
 
@@ -75,6 +90,8 @@ bool Window::initializeObjects()
 	currGeometry = bunnyPoints;
 
 	cube = new Cube(5);
+
+	currObj = cube;
 
 	return true;
 }
@@ -176,7 +193,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 void Window::idleCallback()
 {
 	// Perform any necessary updates here 
-	
+	cube->update();
 }
 
 void Window::displayCallback(GLFWwindow* window)
@@ -184,7 +201,8 @@ void Window::displayCallback(GLFWwindow* window)
 	// Clear the color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	
+	// Render the objects
+	currObj->draw(view, projection, skyboxShaderProgram);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();

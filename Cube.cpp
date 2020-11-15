@@ -60,17 +60,6 @@ Cube::Cube(float size)
 		glm::ivec3(6, 2, 1),
 	}; 
 
-	std::vector<std::string> faces
-	{
-		"skybox/PalldioPalace_extern_right.jpg",
-		"skybox/PalldioPalace_extern_left.jpg",
-		"skybox/PalldioPalace_extern_top.jpg",
-		"skybox/PalldioPalace_extern_bottom.jpg",
-		"skybox/PalldioPalace_extern_front.jpg",
-		"skybox/PalldioPalace_extern_back.jpg"
-	};
-	unsigned int cubemapTexture = loadCubemap(faces);
-
 	// Generate a vertex array (VAO) and a vertex buffer object (VBO).
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -93,6 +82,17 @@ Cube::Cube(float size)
 	// Unbind the VBO/VAO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	std::vector<std::string> faces
+	{
+		"skybox/PalldioPalace_extern_right.jpg",
+		"skybox/PalldioPalace_extern_left.jpg",
+		"skybox/PalldioPalace_extern_top.jpg",
+		"skybox/PalldioPalace_extern_bottom.jpg",
+		"skybox/PalldioPalace_extern_front.jpg",
+		"skybox/PalldioPalace_extern_back.jpg"
+	};
+	unsigned int cubemapTexture = loadCubemap(faces);
 }
 
 Cube::~Cube()
@@ -108,11 +108,10 @@ void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shade
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 
-	// Get the shader variable locations and send the uniform data to the shader 
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
+	// Get the shader variable locations and send the uniform data to the shader
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-	glUniform3fv(glGetUniformLocation(shaderProgram, "color"), 1, glm::value_ptr(color));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
+	
 
 	// Bind the VAO
 	glBindVertexArray(VAO);
