@@ -192,8 +192,10 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 
 void Window::idleCallback()
 {
-	// Perform any necessary updates here 
+	// Perform any necessary updates here
 	cube->update();
+
+	view = glm::mat4(glm::mat3(view));
 }
 
 void Window::displayCallback(GLFWwindow* window)
