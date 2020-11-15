@@ -15,7 +15,7 @@ public:
 	Cube(float size);
 	~Cube();
 
-	void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shader);
+	void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram);
 	void update();
 
 	void spin(float deg);

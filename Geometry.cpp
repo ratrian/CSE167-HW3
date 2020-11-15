@@ -167,14 +167,14 @@ Geometry::~Geometry()
 	glDeleteVertexArrays(1, &VAO);
 }
 
-void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
+void Geometry::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram)
 {
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
-	/*glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(C));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(C));*/
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 	glUniform1f(glGetUniformLocation(shaderProgram, "pointSize"), pointSize);
 	glUniform1f(glGetUniformLocation(shaderProgram, "normalColoring"), normalColoring);
@@ -191,7 +191,7 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 	glUseProgram(0);
 }
 
-void Geometry::update(glm::mat4 C)
+void Geometry::update()
 {
 	// Spin the cube by 1 degree
 	spin(0.1f, glm::vec3(0.0f, 1.0f, 0.0f));

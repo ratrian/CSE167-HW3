@@ -16,7 +16,7 @@
 
 using namespace std;
 
-class Geometry : public Object, public Node
+class Geometry : public Object
 {
 private:
 	std::vector<glm::vec3> points;
@@ -32,8 +32,8 @@ public:
 	Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material);
 	~Geometry();
 	
-	void draw(GLuint shaderProgram, glm::mat4 C);
-	void update(glm::mat4 C);
+	void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram);
+	void update();
 
 	void updatePointSize(GLfloat size);
 	void updateNormalColoring(GLfloat normalColoring);

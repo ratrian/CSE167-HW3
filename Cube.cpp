@@ -89,16 +89,16 @@ Cube::~Cube()
 	glDeleteVertexArrays(1, &VAO);
 }
 
-void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shader)
+void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram)
 {
 	// Actiavte the shader program 
-	glUseProgram(shader);
+	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
-	glUniformMatrix4fv(glGetUniformLocation(shader, "view"), 1, false, glm::value_ptr(view));
-	glUniformMatrix4fv(glGetUniformLocation(shader, "projection"), 1, false, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, glm::value_ptr(model));
-	glUniform3fv(glGetUniformLocation(shader, "color"), 1, glm::value_ptr(color));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	glUniform3fv(glGetUniformLocation(shaderProgram, "color"), 1, glm::value_ptr(color));
 
 	// Bind the VAO
 	glBindVertexArray(VAO);
