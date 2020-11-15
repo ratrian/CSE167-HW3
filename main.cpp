@@ -87,6 +87,9 @@ int main(void)
 	{
 		// Main render display callback. Rendering of objects is done here. (Draw)
 		Window::displayCallback(window);
+
+		// Idle callback. Updating objects, etc. can be done here. (Update)
+		Window::idleCallback();
 	}
 
 	// destroy objects created
