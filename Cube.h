@@ -3,7 +3,11 @@
 
 #include "Object.h"
 
+#include <string>
 #include <vector>
+#include <iostream>
+
+using namespace std;
 
 class Cube : public Object
 {
@@ -19,6 +23,7 @@ public:
 	void update();
 
 	void spin(float deg);
+	unsigned int loadCubemap(std::vector<std::string> faces);
 };
 
 #endif
