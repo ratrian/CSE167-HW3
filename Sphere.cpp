@@ -8,7 +8,8 @@
 #include "Sphere.h"
 
 /* Code sampled from https://gist.github.com/zwzmzd/0195733fa1210346b00d, adjusted to use GL_QUADS instead of GL_QUADS_STRIP */
-Sphere::Sphere() {
+Sphere::Sphere()
+{
     int i, j;
     std::vector<GLfloat> vertices;
     std::vector<GLuint> indices;
@@ -109,13 +110,13 @@ Sphere::Sphere() {
     numsToDraw = indices.size();
 }
 
-void Sphere::
-draw(const glm::mat4& world, const glm::mat4& projection, const glm::mat4& view, const glm::vec3& eye) {
-    glUseProgram(shader);
+void Sphere::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram)
+{
+    glUseProgram(shaderProgram);
 
-    glUniformMatrix4fv(glGetUniformLocation(shader, "view"), 1, false, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(shader, "projection"), 1, false, glm::value_ptr(projection));
-    glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, glm::value_ptr(world));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
     glBindVertexArray(vao);
     
@@ -127,4 +128,9 @@ draw(const glm::mat4& world, const glm::mat4& projection, const glm::mat4& view,
     
     glUseProgram(0);
     glBindVertexArray(0);
+}
+
+void Sphere::update()
+{
+    ;
 }
