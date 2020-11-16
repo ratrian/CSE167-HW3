@@ -24,8 +24,8 @@ out vec3 normalOutput;
 void main()
 {
     // OpenGL maintains the D matrix so you only need to multiply by P, V (aka C inverse), and M
-    gl_Position = projection * view * model * vec4(position, 1.0);
-    gl_PointSize = pointSize - gl_Position.z;
     posOutput = vec3(model * vec4(position, 1.0));
-    normalOutput = normal;
+    normalOutput = mat3(transpose(inverse(model))) * normal;
+    gl_Position = projection * view * vec4(posOutput, 1.0);
+    gl_PointSize = pointSize - gl_Position.z;
 }

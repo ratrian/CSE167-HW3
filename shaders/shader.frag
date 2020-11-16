@@ -13,6 +13,9 @@ uniform vec3 lightPos;
 uniform vec3 lightCol;
 uniform vec3 lightAtten;
 
+uniform vec3 cameraPos;
+uniform samplerCube skybox;
+
 // Inputs to the fragment shader are the outputs of the same name from the vertex shader.
 // Note that you do not have access to the vertex shader's default output, gl_Position.
 in vec3 posOutput;
@@ -26,7 +29,11 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir);
 void main()
 {
     // Use the color passed in. An alpha of 1.0f means it is not transparent.
-    vec3 norm = normalize(normalOutput);
+    vec3 I = normalize(posOutput - cameraPos);
+    vec3 R = reflect(I, normalize(normalOutput));
+    fragColor = vec4(texture(skybox, R).rgb, 1.0);
+
+    /*vec3 norm = normalize(normalOutput);
 
     if (drawSphere == 1.0) {
         if (normalColoring == 1.0)
@@ -43,7 +50,7 @@ void main()
             vec3 result = CalcPointLight(posOutput, norm, viewDir);
             fragColor = vec4(result, 1.0);
         }
-    }
+    }*/
 }
 
 // Calculates the color when using a point light.

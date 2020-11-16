@@ -24,7 +24,6 @@ Geometry* Window::bearPoints;
 Geometry* currGeometry;
 
 Cube* Window::cube;
-Sphere* Window::sphere;
 
 GLfloat Window::normalColoring = 1.0;
 GLfloat pointSize;
@@ -89,7 +88,6 @@ bool Window::initializeObjects()
 	currGeometry = bunnyPoints;
 
 	cube = new Cube(1000);
-	sphere = new Sphere();
 
 	return true;
 }
@@ -109,7 +107,6 @@ void Window::cleanUp()
 	delete bearPoints;
 
 	delete cube;
-	delete sphere;
 
 	// Delete the shader program.
 	glDeleteProgram(shaderProgram);
@@ -203,11 +200,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Render the objects
-
-
 	cube->draw(view, projection, skyboxShaderProgram);
-	sphere->setEye(lookAtPoint);
-	sphere->draw(view, projection, shaderProgram);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();

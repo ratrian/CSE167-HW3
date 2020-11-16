@@ -30,7 +30,6 @@ public:
 	static Geometry* bearPoints;
 	
 	static Cube* cube;
-	static Sphere* sphere;
 
 	static GLfloat normalColoring;
 
