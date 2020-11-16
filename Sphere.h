@@ -15,7 +15,7 @@
 
 class Sphere : public Object {
 	public:
-		GLuint vao = 0, vbo = 0, vbo_n = 0, ebo = 0, cubemapTexture;
+		GLuint vao = 0, vbo = 0, vbo_n = 0, ebo = 0;
 
 		int stackCount = 40;
 		int sectorCount = 40;

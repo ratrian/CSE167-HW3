@@ -90,7 +90,6 @@ bool Window::initializeObjects()
 
 	cube = new Cube(1000);
 	sphere = new Sphere();
-	sphere->cubemapTexture = cube->cubemapTexture;
 
 	return true;
 }

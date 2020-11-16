@@ -12,11 +12,9 @@ using namespace std;
 class Cube : public Object
 {
 private:
-	GLuint VAO, VBO, EBO;
+	GLuint VAO, VBO, EBO, cubemapTexture;
 
 public:
-	GLuint cubemapTexture;
-
 	Cube(float size);
 	~Cube();
 
