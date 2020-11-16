@@ -18,11 +18,10 @@ public:
 	Cube(float size);
 	~Cube();
 
+	unsigned int loadCubemap(std::vector<std::string> faces);
 	void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram);
 	void update();
-
 	void spin(float deg);
-	unsigned int loadCubemap(std::vector<std::string> faces);
 };
 
 #endif

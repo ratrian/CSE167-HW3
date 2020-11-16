@@ -26,6 +26,7 @@ class Sphere : public Object {
 		void setEye(const glm::vec3& eye) { Sphere::eye = eye; }
 		void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram);
 		void update();
+		void spin(float deg);
 };
 
 #endif
