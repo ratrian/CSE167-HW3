@@ -107,6 +107,7 @@
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -120,6 +121,7 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Window.h" />

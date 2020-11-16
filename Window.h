@@ -5,7 +5,9 @@
 #include "shader.h"
 #include "Object.h"
 #include "Cube.h"
+#include "Sphere.h"
 #include "Geometry.h"
+#include "Transform.h"
 
 class Window
 {
@@ -26,7 +28,9 @@ public:
 	static Geometry* bunnyPoints;
 	static Geometry* sandalPoints;
 	static Geometry* bearPoints;
+	
 	static Cube* cube;
+	static Sphere* sphere;
 
 	static GLfloat normalColoring;
 
