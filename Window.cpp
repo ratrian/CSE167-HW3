@@ -88,7 +88,7 @@ bool Window::initializeObjects()
 	// Set bunny to be the first to display
 	currGeometry = bunnyPoints;
 
-	cube = new Cube(10);
+	cube = new Cube(1000);
 	sphere = new Sphere();
 	sphere->cubemapTexture = cube->cubemapTexture;
 
@@ -202,8 +202,8 @@ void Window::displayCallback(GLFWwindow* window)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Render the objects
-	//currGeometry->draw(view, projection, shaderProgram);
-	sphere->draw(view, projection, shaderProgram);
+	currGeometry->draw(view, projection, shaderProgram);
+	//sphere->draw(view, projection, shaderProgram);
 	cube->draw(view, projection, skyboxShaderProgram);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
