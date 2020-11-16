@@ -80,7 +80,8 @@ Sphere::Sphere()
         }
         indices.push_back(GL_PRIMITIVE_RESTART_FIXED_INDEX);
     }
-
+ 
+    model = glm::mat4(5);
 
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);

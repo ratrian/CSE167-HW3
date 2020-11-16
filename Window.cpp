@@ -201,8 +201,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Render the objects
-	currGeometry->draw(view, projection, shaderProgram);
-	//sphere->draw(view, projection, shaderProgram);
+	sphere->draw(view, projection, shaderProgram);
 	cube->draw(view, projection, skyboxShaderProgram);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
