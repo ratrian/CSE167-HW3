@@ -29,7 +29,7 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir);
 void main()
 {
     // Use the color passed in. An alpha of 1.0f means it is not transparent.
-    vec3 I = normalize(posOutput - cameraPos);
+    vec3 I = normalize(cameraPos - posOutput);
     vec3 R = reflect(I, normalize(normalOutput));
     fragColor = vec4(texture(skybox, R).rgb, 1.0);
 
