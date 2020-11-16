@@ -109,6 +109,15 @@ Sphere::Sphere()
     numsToDraw = indices.size();
 }
 
+Sphere::~Sphere()
+{
+    // Delete the VBO/EBO and the VAO.
+    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &vbo_n);
+    glDeleteBuffers(1, &ebo);
+    glDeleteVertexArrays(1, &vao);
+}
+
 void Sphere::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram)
 {
     glUseProgram(shaderProgram);

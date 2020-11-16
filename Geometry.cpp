@@ -162,8 +162,10 @@ Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalCol
 
 Geometry::~Geometry() 
 {
-	// Delete the VBO and the VAO.
+	// Delete the VBO/NBO/EBO and the VAO.
 	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &NBO);
+	glDeleteBuffers(1, &EBO);
 	glDeleteVertexArrays(1, &VAO);
 }
 
