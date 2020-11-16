@@ -15,7 +15,6 @@
 
 class Sphere : public Object {
 	public:
-		glm::vec3 eye;
 		GLuint vao = 0, vbo = 0, vbo_n = 0, ebo = 0;
 
 		int stackCount = 40;
@@ -23,7 +22,6 @@ class Sphere : public Object {
 		int numsToDraw;
 		Sphere();
 		
-		void setEye(const glm::vec3& eye) { Sphere::eye = eye; }
 		void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram);
 		void update();
 		void spin(float deg);
