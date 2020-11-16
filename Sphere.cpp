@@ -119,6 +119,9 @@ void Sphere::draw(const glm::mat4& view, const glm::mat4& projection, GLuint sha
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
     glBindVertexArray(vao);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
     
     glPatchParameteri(GL_PATCH_VERTICES, 4);
     glEnable(GL_PRIMITIVE_RESTART);
@@ -126,8 +129,8 @@ void Sphere::draw(const glm::mat4& view, const glm::mat4& projection, GLuint sha
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glDrawElements(GL_QUADS, numsToDraw, GL_UNSIGNED_INT, NULL);
     
-    glUseProgram(0);
     glBindVertexArray(0);
+    glUseProgram(0);
 }
 
 void Sphere::update()

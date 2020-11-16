@@ -88,8 +88,9 @@ bool Window::initializeObjects()
 	// Set bunny to be the first to display
 	currGeometry = bunnyPoints;
 
-	cube = new Cube(1000);
+	cube = new Cube(10);
 	sphere = new Sphere();
+	sphere->cubemapTexture = cube->cubemapTexture;
 
 	return true;
 }

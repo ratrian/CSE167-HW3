@@ -146,18 +146,18 @@ void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shade
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, false, glm::value_ptr(model));
 	
-	glDepthMask(GL_FALSE);
 	glBindVertexArray(VAO);
+
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glDepthMask(GL_TRUE);
-
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
 
 	// Unbind the VAO and shader program
 	glBindVertexArray(0);
 	glUseProgram(0);
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 }
 
 void Cube::update()
