@@ -81,7 +81,8 @@ Sphere::Sphere()
         indices.push_back(GL_PRIMITIVE_RESTART_FIXED_INDEX);
     }
  
-    model = glm::mat4(5);
+    //model = glm::mat4(5);
+    model = glm::rotate(glm::mat4(5), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -148,5 +149,5 @@ void Sphere::update()
 void Sphere::spin(float deg)
 {
     // Update the model matrix by multiplying a rotation matrix
-    model = model * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = model * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 0.0f, 1.0f));
 }
