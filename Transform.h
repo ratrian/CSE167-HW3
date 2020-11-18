@@ -12,7 +12,7 @@ private:
 	std::list<Node*> children;
 
 public:
-	Transform();
+	Transform(glm::mat4 M);
 
 	void addChild(Node* child);
 	void draw(GLuint shaderProgram, glm::mat4 C);
