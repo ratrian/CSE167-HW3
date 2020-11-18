@@ -8,7 +8,7 @@
 #include "Sphere.h"
 
 /* Code sampled from https://gist.github.com/zwzmzd/0195733fa1210346b00d, adjusted to use GL_QUADS instead of GL_QUADS_STRIP */
-Sphere::Sphere()
+Sphere::Sphere(glm::mat4 currC) : modelView(currC)
 {
     int i, j;
     std::vector<GLfloat> vertices;
@@ -80,9 +80,6 @@ Sphere::Sphere()
         }
         indices.push_back(GL_PRIMITIVE_RESTART_FIXED_INDEX);
     }
- 
-    //model = glm::mat4(5);
-    model = glm::rotate(glm::mat4(5), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -120,13 +117,12 @@ Sphere::~Sphere()
     glDeleteVertexArrays(1, &vao);
 }
 
-void Sphere::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram)
+void Sphere::draw(GLuint shaderProgram, glm::mat4 C)
 {
     glUseProgram(shaderProgram);
 
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(projection));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(modelView));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "C"), 1, GL_FALSE, glm::value_ptr(C));
 
     glBindVertexArray(vao);
     
@@ -140,7 +136,7 @@ void Sphere::draw(const glm::mat4& view, const glm::mat4& projection, GLuint sha
     glUseProgram(0);
 }
 
-void Sphere::update()
+void Sphere::update(glm::mat4 C)
 {
     // Spin the cube by 1 degree.
     spin(0.1f);
@@ -149,5 +145,5 @@ void Sphere::update()
 void Sphere::spin(float deg)
 {
     // Update the model matrix by multiplying a rotation matrix
-    model = model * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 0.0f, 1.0f));
+    modelView = modelView * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 0.0f, 1.0f));
 }

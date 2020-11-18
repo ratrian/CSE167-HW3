@@ -12,21 +12,23 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "shader.h"
-#include "Object.h"
+#include "Node.h"
 
-class Sphere : public Object {
+class Sphere : public Node {
 	public:
+		glm::mat4 modelView;
+
 		GLuint vao = 0, vbo = 0, vbo_n = 0, ebo = 0;
 
 		int stackCount = 40;
 		int sectorCount = 40;
 		int numsToDraw;
 
-		Sphere();
+		Sphere(glm::mat4 currC);
 		~Sphere();
 
-		void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram);
-		void update();
+		void draw(GLuint shaderProgram, glm::mat4 C);
+		void update(glm::mat4 C);
 		void spin(float deg);
 };
 

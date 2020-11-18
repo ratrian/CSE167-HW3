@@ -89,7 +89,7 @@ bool Window::initializeObjects()
 	currGeometry = bunnyPoints;
 
 	cube = new Cube(1000);
-	sphere = new Sphere();
+	sphere = new Sphere(glm::rotate(glm::mat4(5), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
 
 	return true;
 }
@@ -192,7 +192,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 void Window::idleCallback()
 {
 	// Perform any necessary updates here
-	sphere->update();
+	sphere->update(glm::mat4(1));
 }
 
 void Window::displayCallback(GLFWwindow* window)
@@ -201,7 +201,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Render the objects
-	sphere->draw(view, projection, shaderProgram);
+	sphere->draw(shaderProgram, projection * view);
 	cube->draw(view, projection, skyboxShaderProgram);
 
 	// Gets events, including input such as keyboard and mouse or window resizing

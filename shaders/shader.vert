@@ -10,9 +10,8 @@ layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 
 // Uniform variables can be updated by fetching their location and passing values to that location
-uniform mat4 projection;
-uniform mat4 view;
-uniform mat4 model;
+uniform mat4 modelView;
+uniform mat4 C;
 uniform float pointSize;
 
 // Outputs of the vertex shader are the inputs of the same name of the fragment shader.
@@ -24,8 +23,8 @@ out vec3 normalOutput;
 void main()
 {
     // OpenGL maintains the D matrix so you only need to multiply by P, V (aka C inverse), and M
-    posOutput = vec3(model * vec4(position, 1.0));
-    gl_Position = projection * view * vec4(posOutput, 1.0);
+    posOutput = vec3(modelView * vec4(position, 1.0));
+    gl_Position = C * vec4(posOutput, 1.0);
     gl_PointSize = pointSize - gl_Position.z;
-    normalOutput = mat3(transpose(inverse(model))) * normal;
+    normalOutput = mat3(transpose(inverse(modelView))) * normal;
 }
