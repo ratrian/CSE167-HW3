@@ -1,7 +1,7 @@
 #include "Geometry.h"
 
-Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material)
-	: pointSize(pointSize), normalColoring(normalColoring), material(material)
+Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material)
+	: modelView(currC), pointSize(pointSize), normalColoring(normalColoring), material(material)
 {
 	/*
 	 * TODO: Section 2: Currently, all the points are hard coded below.
@@ -123,12 +123,6 @@ Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalCol
 		points[i].z *= 9.5 / maxDist;
 	}
 
-	// Set the model matrix to an identity matrix. 
-	model = glm::mat4(1);
-
-	// Set the color. 
-	color = glm::vec3(1, 0, 0);
-
 	// Generate a Vertex Array (VAO)
 	glGenVertexArrays(1, &VAO);
 	
@@ -169,15 +163,13 @@ Geometry::~Geometry()
 	glDeleteVertexArrays(1, &VAO);
 }
 
-void Geometry::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram)
+void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 {
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(C));
 	glUniform1f(glGetUniformLocation(shaderProgram, "pointSize"), pointSize);
 	glUniform1f(glGetUniformLocation(shaderProgram, "normalColoring"), normalColoring);
 	material->sendMatToShader(shaderProgram);
@@ -193,10 +185,9 @@ void Geometry::draw(const glm::mat4& view, const glm::mat4& projection, GLuint s
 	glUseProgram(0);
 }
 
-void Geometry::update()
+void Geometry::update(glm::mat4 C)
 {
-	// Spin the cube by 1 degree
-	spin(0.1f, glm::vec3(0.0f, 1.0f, 0.0f));
+
 }
 
 void Geometry::updatePointSize(GLfloat size) 
@@ -216,10 +207,10 @@ void Geometry::spin(float rotAngle, glm::vec3 rotAxis)
 {
 	// Update the model matrix by multiplying a rotation matrix
 	glm::mat4 m = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
-	model = m * model;
+	modelView = m * modelView;
 }
 
 void Geometry::zoom(glm::vec3 s)
 {
-	model = glm::scale(model, s);
+	modelView = glm::scale(modelView, s);
 }

@@ -81,9 +81,9 @@ bool Window::initializeObjects()
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Create point clouds consisting of objects vertices.
-	bunnyPoints = new Geometry("bunny.obj", pointSize, normalColoring, bunnyPointsMaterial);
-	sandalPoints = new Geometry("sandal.obj", pointSize, normalColoring, sandalPointsMaterial);
-	bearPoints = new Geometry("bear.obj", pointSize, normalColoring, bearPointsMaterial);
+	bunnyPoints = new Geometry(glm::mat4(1), "bunny.obj", pointSize, normalColoring, bunnyPointsMaterial);
+	sandalPoints = new Geometry(glm::mat4(1), "sandal.obj", pointSize, normalColoring, sandalPointsMaterial);
+	bearPoints = new Geometry(glm::mat4(1), "bear.obj", pointSize, normalColoring, bearPointsMaterial);
 
 	// Set bunny to be the first to display
 	currGeometry = bunnyPoints;

@@ -14,9 +14,11 @@
 #include <sstream>
 #include <cmath>
 
-class Geometry : public Object
+class Geometry : public Node
 {
 private:
+	glm::mat4 modelView;
+
 	std::vector<glm::vec3> points;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::ivec3> indices;
@@ -27,11 +29,11 @@ private:
 	Material* material;
 
 public:
-	Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material);
+	Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material);
 	~Geometry();
 	
-	void draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram);
-	void update();
+	void draw(GLuint shaderProgram, glm::mat4 C);
+	void update(glm::mat4 C);
 
 	void updatePointSize(GLfloat size);
 	void updateNormalColoring(GLfloat normalColoring);
