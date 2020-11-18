@@ -1,7 +1,6 @@
 #ifndef _GEOMETRY_H_
 #define _GEOMETRY_H_
 
-#include "Object.h"
 #include "Node.h"
 
 #include "Material.h"

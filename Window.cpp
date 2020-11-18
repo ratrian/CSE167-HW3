@@ -78,7 +78,7 @@ bool Window::initializeObjects()
 	bearPointsMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
 
 	pointLight = new PointLight(glm::vec3(6.0, 6.0, 6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
-	lightSource = new LightSource("sphere.obj", pointLight);
+	lightSource = new LightSource(glm::mat4(1), "sphere.obj", pointLight);
 
 	// Create point clouds consisting of objects vertices.
 	bunnyPoints = new Geometry(glm::mat4(1), "bunny.obj", pointSize, normalColoring, bunnyPointsMaterial);

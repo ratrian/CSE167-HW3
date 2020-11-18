@@ -1,6 +1,6 @@
 #include "LightSource.h"
 
-LightSource::LightSource(std::string objFilename, PointLight* pointLight) : pointLight(pointLight)
+LightSource::LightSource(glm::mat4 currC, std::string objFilename, PointLight* pointLight) : modelView(currC), pointLight(pointLight)
 {
 	std::ifstream objFile(objFilename); // The obj file we are reading.
 
@@ -72,9 +72,6 @@ LightSource::LightSource(std::string objFilename, PointLight* pointLight) : poin
 		points[i].z += pointLight->getPos().z;
 	}
 
-	// Set the model matrix to an identity matrix. 
-	model = glm::mat4(1);
-
 	// Generate a Vertex Array (VAO)
 	glGenVertexArrays(1, &VAO);
 
@@ -113,15 +110,14 @@ LightSource::~LightSource()
 	glDeleteVertexArrays(1, &VAO);
 }
 
-void LightSource::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shaderProgram)
+void LightSource::draw(GLuint shaderProgram, glm::mat4 C)
 {
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, false, glm::value_ptr(view));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, false, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(modelView));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "C"), 1, GL_FALSE, glm::value_ptr(C));
 	pointLight->sendLightToShader(shaderProgram);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawSphere"), 1.0);
 
@@ -136,22 +132,22 @@ void LightSource::draw(const glm::mat4& view, const glm::mat4& projection, GLuin
 	glUseProgram(0);
 }
 
-void LightSource::update()
+void LightSource::update(glm::mat4 C)
 {
-	;
+
 }
 
 void LightSource::orbit(glm::vec3 direction, float rotAngle, glm::vec3 rotAxis)
 {
 	glm::mat4 mT = glm::translate(glm::mat4(1.0), direction);
 	glm::mat4 mR = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
-	model = mT * model;
-	model = mR * model;
+	modelView = mT * modelView;
+	modelView = mR * modelView;
 	pointLight->orbit(direction, rotAngle, rotAxis);
 }
 
 void LightSource::move(glm::vec3 t)
 {
-	model = glm::translate(model, t);
+	modelView = glm::translate(modelView, t);
 	pointLight->move(t);
 }
