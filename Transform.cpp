@@ -1,5 +1,10 @@
 #include "Transform.h"
 
+Transform::Transform()
+{
+
+}
+
 void Transform::addChild(Node* child)
 {
 

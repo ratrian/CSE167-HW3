@@ -12,6 +12,8 @@ private:
 	std::list<Node*> children;
 
 public:
+	Transform();
+
 	void addChild(Node* child);
 	void draw(GLuint shaderProgram, glm::mat4 C);
 	void update(glm::mat4 C);
