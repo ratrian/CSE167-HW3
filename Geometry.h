@@ -14,8 +14,6 @@
 #include <sstream>
 #include <cmath>
 
-using namespace std;
-
 class Geometry : public Object
 {
 private:

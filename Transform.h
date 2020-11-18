@@ -3,12 +3,16 @@
 
 #include "Node.h"
 
+#include <list>
+
 class Transform : public Node
 {
 private:
-
+	glm::mat4 M;
+	std::list<Node*> children;
 
 public:
+	void addChild(Node* child);
 	void draw(GLuint shaderProgram, glm::mat4 C);
 	void update(glm::mat4 C);
 };
