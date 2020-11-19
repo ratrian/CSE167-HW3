@@ -89,7 +89,7 @@ bool Window::initializeObjects()
 	currGeometry = bunnyPoints;
 
 	cube = new Cube(1000);
-	sphere = new Sphere(glm::rotate(glm::mat4(5), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
+	sphere = new Sphere(glm::rotate(glm::mat4(5), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)), eyePos);
 
 	return true;
 }

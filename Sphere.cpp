@@ -8,7 +8,7 @@
 #include "Sphere.h"
 
 /* Code sampled from https://gist.github.com/zwzmzd/0195733fa1210346b00d, adjusted to use GL_QUADS instead of GL_QUADS_STRIP */
-Sphere::Sphere(glm::mat4 currC) : modelView(currC)
+Sphere::Sphere(glm::mat4 currC, glm::vec3 eyePos) : modelView(currC), eyePos(eyePos)
 {
     int i, j;
     std::vector<GLfloat> vertices;
@@ -123,6 +123,7 @@ void Sphere::draw(GLuint shaderProgram, glm::mat4 C)
 
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(modelView));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "C"), 1, GL_FALSE, glm::value_ptr(C));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "cameraPos"), 1, GL_FALSE, glm::value_ptr(eyePos));
 
     glBindVertexArray(vao);
     
@@ -131,7 +132,7 @@ void Sphere::draw(GLuint shaderProgram, glm::mat4 C)
     glPrimitiveRestartIndex(GL_PRIMITIVE_RESTART_FIXED_INDEX);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glDrawElements(GL_QUADS, numsToDraw, GL_UNSIGNED_INT, NULL);
-    
+
     glBindVertexArray(0);
     glUseProgram(0);
 }

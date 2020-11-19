@@ -1,5 +1,4 @@
 #version 330 core
-// This is a sample fragment shader.
 
 uniform float normalColoring;
 uniform float drawSphere;

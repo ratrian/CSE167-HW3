@@ -17,6 +17,7 @@
 class Sphere : public Node {
 	public:
 		glm::mat4 modelView;
+		glm::vec3 eyePos;
 
 		GLuint vao = 0, vbo = 0, vbo_n = 0, ebo = 0;
 
@@ -24,7 +25,7 @@ class Sphere : public Node {
 		int sectorCount = 400;
 		int numsToDraw;
 
-		Sphere(glm::mat4 currC);
+		Sphere(glm::mat4 currC, glm::vec3 eyePos);
 		~Sphere();
 
 		void draw(GLuint shaderProgram, glm::mat4 C);

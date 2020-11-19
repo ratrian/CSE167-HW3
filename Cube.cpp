@@ -158,8 +158,6 @@ void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shade
 	// Unbind the VAO and shader program
 	glBindVertexArray(0);
 	glUseProgram(0);
-
-	glDisable(GL_CULL_FACE);
 }
 
 void Cube::update()
