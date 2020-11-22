@@ -102,9 +102,9 @@ void Window::cleanUp()
 
 	delete pointLight;
 	delete lightSource;
-
+/*
 	// Deallcoate the objects.
-/*	delete cube;
+	delete cube;
 	delete cone;
 	delete cylinder;
 */
