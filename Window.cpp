@@ -79,10 +79,10 @@ bool Window::initializeObjects()
 
 	pointLight = new PointLight(glm::vec3(6.0, 6.0, 6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource(glm::mat4(1), "sphere.obj", pointLight);
-/*
+
 	// Create point clouds consisting of objects vertices.
 	cube = new Geometry(glm::mat4(1), "cube.obj", pointSize, normalColoring, cubeMaterial);
-	cone = new Geometry(glm::mat4(1), "cone.obj", pointSize, normalColoring, coneMaterial);
+/*	cone = new Geometry(glm::mat4(1), "cone.obj", pointSize, normalColoring, coneMaterial);
 	cylinder = new Geometry(glm::mat4(1), "cylinder.obj", pointSize, normalColoring, cylinderMaterial);
 */
 	// Set bunny to be the first to display
@@ -102,10 +102,10 @@ void Window::cleanUp()
 
 	delete pointLight;
 	delete lightSource;
-/*
+
 	// Deallcoate the objects.
 	delete cube;
-	delete cone;
+/*	delete cone;
 	delete cylinder;
 */
 	delete skybox;

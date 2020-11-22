@@ -63,13 +63,16 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 				string one, two, three;
 				ss >> one >> two >> three;
 
-				glm::ivec3 pIdx, nIdx;
-				pIdx.x = stoi(one.substr(0, one.find("//"))) - 1;
-				nIdx.x = stoi(one.substr(one.find("//") + 2)) - 1;
-				pIdx.y = stoi(two.substr(0, two.find("//"))) - 1;
-				nIdx.y = stoi(two.substr(two.find("//") + 2)) - 1;
-				pIdx.z = stoi(three.substr(0, three.find("//"))) - 1;
-				nIdx.z = stoi(three.substr(three.find("//") + 2)) - 1;
+				glm::ivec3 pIdx, tIdx, nIdx;
+				pIdx.x = stoi(one.substr(0, one.find("/"))) - 1;
+				tIdx.x = stoi(one.substr(one.find("/") + 1, one.substr(one.find("/") + 1).find("/"))) - 1;
+				nIdx.x = stoi(one.substr(one.substr(one.find("/") + 1).find("/") + 1)) - 1;
+				pIdx.y = stoi(two.substr(0, two.find("/"))) - 1;
+				tIdx.y = stoi(two.substr(two.find("/") + 1, two.substr(two.find("/") + 1).find("/"))) - 1;
+				nIdx.y = stoi(two.substr(two.substr(two.find("/") + 1).find("/") + 1)) - 1;
+				pIdx.z = stoi(three.substr(0, three.find("/"))) - 1;
+				tIdx.z = stoi(three.substr(three.find("/") + 1, three.substr(three.find("/") + 1).find("/"))) - 1;
+				nIdx.z = stoi(three.substr(three.substr(three.find("/") + 1).find("/") + 1)) - 1;
 
 				// Process the index.
 				indices.push_back(pIdx);
@@ -133,10 +136,8 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 		points[i].z *= 9.5 / maxDist;
 	}
 
-	// Generate a Vertex Array (VAO)
+	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);
-	
-	// Bind to the VAO.
 	glBindVertexArray(VAO);
 
 	// Generate a Vertex Buffer Object (VBO) and bind to it
@@ -162,7 +163,7 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 	// Generate EBO, bind the EBO to the bound VAO and send the data
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(glm::ivec3)* indices.size(), indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(glm::ivec3) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
 	// Unbind the VBO/VAO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
