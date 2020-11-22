@@ -19,10 +19,11 @@ private:
 	glm::mat4 modelView;
 
 	std::vector<glm::vec3> points;
+	std::vector<glm::vec2> textures;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::ivec3> indices;
 
-	GLuint VAO, VBO, NBO, EBO;
+	GLuint VAO, VBO, TBO, NBO, EBO;
 	
 	GLfloat pointSize, normalColoring;
 	Material* material;

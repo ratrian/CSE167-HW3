@@ -36,6 +36,16 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 				// Process the point.
 				points.push_back(point);
 			}
+			// If the line is about vertex texture (starting with a "vt").
+			else if (label == "vt")
+			{
+				// Read the later three float numbers and use them as the coordinates.
+				glm::vec2 texture;
+				ss >> texture.x >> texture.y;
+
+				// Process the texture.
+				textures.push_back(texture);
+			}
 			// If the line is about vertex normal (starting with a "vn").
 			else if (label == "vn")
 			{
@@ -137,12 +147,17 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 
-	glGenBuffers(1, &NBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, NBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)* normals.size(), normals.data(), GL_STATIC_DRAW);
+	glGenBuffers(1, &TBO);
+	glBindBuffer(GL_ARRAY_BUFFER, TBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * textures.size(), textures.data(), GL_STATIC_DRAW);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+
+	glGenBuffers(1, &NBO);
+	glBindBuffer(GL_ARRAY_BUFFER, NBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), normals.data(), GL_STATIC_DRAW);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 
 	// Generate EBO, bind the EBO to the bound VAO and send the data
 	glGenBuffers(1, &EBO);
@@ -158,6 +173,7 @@ Geometry::~Geometry()
 {
 	// Delete the VBO/NBO/EBO and the VAO.
 	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &TBO);
 	glDeleteBuffers(1, &NBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteVertexArrays(1, &VAO);
