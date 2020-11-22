@@ -25,12 +25,12 @@ public:
 	static LightSource* lightSource;
 
 	// Objects to Render
-	static Geometry* bunnyPoints;
-	static Geometry* sandalPoints;
-	static Geometry* bearPoints;
+	static Geometry* cube;
+	static Geometry* cone;
+	static Geometry* cylinder;
 	
-	static Cube* cube;
-	static Sphere* sphere;
+	static Cube* skybox;
+	static Sphere* discoball;
 
 	static GLfloat normalColoring;
 

@@ -10,21 +10,21 @@ bool Window::actionObject = true;
 bool Window::actionLightSource = false;
 glm::vec3 Window::lastPoint;
 
-Material* bunnyPointsMaterial;
-Material* sandalPointsMaterial;
-Material* bearPointsMaterial;
+Material* cubeMaterial;
+Material* coneMaterial;
+Material* cylinderMaterial;
 
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
 // Objects to Render
-Geometry* Window::bunnyPoints;
-Geometry* Window::sandalPoints;
-Geometry* Window::bearPoints;
+Geometry* Window::cube;
+Geometry* Window::cone;
+Geometry* Window::cylinder;
 Geometry* currGeometry;
 
-Cube* Window::cube;
-Sphere* Window::sphere;
+Cube* Window::skybox;
+Sphere* Window::discoball;
 
 GLfloat Window::normalColoring = 1.0;
 GLfloat pointSize;
@@ -73,43 +73,43 @@ bool Window::initializeObjects()
 {
 	pointSize = 30.0;
 
-	bunnyPointsMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
-	sandalPointsMaterial = new Material(glm::vec3(0.25, 0.20725, 0.20725), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
-	bearPointsMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
+	cubeMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
+	coneMaterial = new Material(glm::vec3(0.25, 0.20725, 0.20725), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
+	cylinderMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
 
 	pointLight = new PointLight(glm::vec3(6.0, 6.0, 6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource(glm::mat4(1), "sphere.obj", pointLight);
-
+/*
 	// Create point clouds consisting of objects vertices.
-	bunnyPoints = new Geometry(glm::mat4(1), "bunny.obj", pointSize, normalColoring, bunnyPointsMaterial);
-	sandalPoints = new Geometry(glm::mat4(1), "sandal.obj", pointSize, normalColoring, sandalPointsMaterial);
-	bearPoints = new Geometry(glm::mat4(1), "bear.obj", pointSize, normalColoring, bearPointsMaterial);
-
+	cube = new Geometry(glm::mat4(1), "cube.obj", pointSize, normalColoring, cubeMaterial);
+	cone = new Geometry(glm::mat4(1), "cone.obj", pointSize, normalColoring, coneMaterial);
+	cylinder = new Geometry(glm::mat4(1), "cylinder.obj", pointSize, normalColoring, cylinderMaterial);
+*/
 	// Set bunny to be the first to display
-	currGeometry = bunnyPoints;
+	currGeometry = cube;
 
-	cube = new Cube(1000);
-	sphere = new Sphere(glm::rotate(glm::mat4(5), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)), eyePos);
+	skybox = new Cube(1000);
+	discoball = new Sphere(glm::rotate(glm::mat4(5), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)), eyePos);
 
 	return true;
 }
 
 void Window::cleanUp()
 {
-	delete bunnyPointsMaterial;
-	delete sandalPointsMaterial;
-	delete bearPointsMaterial;
+	delete cubeMaterial;
+	delete coneMaterial;
+	delete cylinderMaterial;
 
 	delete pointLight;
 	delete lightSource;
 
 	// Deallcoate the objects.
-	delete bunnyPoints;
-	delete sandalPoints;
-	delete bearPoints;
-
-	delete cube;
-	delete sphere;
+/*	delete cube;
+	delete cone;
+	delete cylinder;
+*/
+	delete skybox;
+	delete discoball;
 
 	// Delete the shader program.
 	glDeleteProgram(shaderProgram);
@@ -192,7 +192,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 void Window::idleCallback()
 {
 	// Perform any necessary updates here
-	sphere->update(glm::mat4(1));
+	discoball->update(glm::mat4(1));
 }
 
 void Window::displayCallback(GLFWwindow* window)
@@ -201,8 +201,8 @@ void Window::displayCallback(GLFWwindow* window)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Render the objects
-	cube->draw(view, projection, skyboxShaderProgram);
-	sphere->draw(shaderProgram, projection * view);
+	skybox->draw(view, projection, skyboxShaderProgram);
+	discoball->draw(shaderProgram, projection * view);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
@@ -229,13 +229,13 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 
 		// switch between the cube and the cube Geometry
 		case GLFW_KEY_F1:
-			currGeometry = bunnyPoints;
+			currGeometry = cube;
 			break;
 		case GLFW_KEY_F2:
-			currGeometry = sandalPoints;
+			currGeometry = cone;
 			break;
 		case GLFW_KEY_F3:
-			currGeometry = bearPoints;
+			currGeometry = cylinder;
 			break;
 		case GLFW_KEY_S:
 			pointSize = pointSize / 2;
