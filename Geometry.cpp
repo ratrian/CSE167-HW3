@@ -8,6 +8,13 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 	 * Modify this to read faces from an obj file.
 	 */
 
+	std::vector<glm::vec3> inputPoints;
+	std::vector<glm::vec2> inputTextures;
+	std::vector<glm::vec3> inputNormals;
+	std::vector<glm::vec3> pointIndices;
+	std::vector<glm::vec3> textureIndices;
+	std::vector<glm::vec3> normalIndices;
+
 	std::ifstream objFile(objFilename); // The obj file we are reading.
 
 	// Check whether the file can be opened.
@@ -34,7 +41,7 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 				ss >> point.x >> point.y >> point.z;
 
 				// Process the point.
-				points.push_back(point);
+				inputPoints.push_back(point);
 			}
 			// If the line is about vertex texture (starting with a "vt").
 			else if (label == "vt")
@@ -44,7 +51,7 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 				ss >> texture.x >> texture.y;
 
 				// Process the texture.
-				textures.push_back(texture);
+				inputTextures.push_back(texture);
 			}
 			// If the line is about vertex normal (starting with a "vn").
 			else if (label == "vn")
@@ -54,7 +61,7 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 				ss >> normal.x >> normal.y >> normal.z;
 
 				// Process the normal.
-				normals.push_back(normal);
+				inputNormals.push_back(normal);
 			}
 			// If the line is about face (starting with a "f").
 			else if (label == "f")
@@ -65,17 +72,25 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 
 				glm::ivec3 pIdx, tIdx, nIdx;
 				pIdx.x = stoi(one.substr(0, one.find("/"))) - 1;
-				tIdx.x = stoi(one.substr(one.find("/") + 1, one.substr(one.find("/") + 1).find("/"))) - 1;
-				nIdx.x = stoi(one.substr(one.substr(one.find("/") + 1).find("/") + 1)) - 1;
+				one = one.substr(one.find("/") + 1);
+				tIdx.x = stoi(one.substr(0, one.find("/"))) - 1;
+				one = one.substr(one.find("/") + 1);
+				nIdx.x = stoi(one) - 1;
 				pIdx.y = stoi(two.substr(0, two.find("/"))) - 1;
-				tIdx.y = stoi(two.substr(two.find("/") + 1, two.substr(two.find("/") + 1).find("/"))) - 1;
-				nIdx.y = stoi(two.substr(two.substr(two.find("/") + 1).find("/") + 1)) - 1;
+				two = two.substr(two.find("/") + 1);
+				tIdx.y = stoi(two.substr(0, two.find("/"))) - 1;
+				two = two.substr(two.find("/") + 1);
+				nIdx.y = stoi(two) - 1;
 				pIdx.z = stoi(three.substr(0, three.find("/"))) - 1;
-				tIdx.z = stoi(three.substr(three.find("/") + 1, three.substr(three.find("/") + 1).find("/"))) - 1;
-				nIdx.z = stoi(three.substr(three.substr(three.find("/") + 1).find("/") + 1)) - 1;
+				three = three.substr(three.find("/") + 1);
+				tIdx.z = stoi(three.substr(0, three.find("/"))) - 1;
+				three = three.substr(three.find("/") + 1);
+				nIdx.z = stoi(three) - 1;
 
 				// Process the index.
-				indices.push_back(pIdx);
+				pointIndices.push_back(pIdx);
+				textureIndices.push_back(tIdx);
+				normalIndices.push_back(nIdx);
 			}
 		}
 	}
@@ -83,6 +98,25 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 		std::cerr << "Can't open the file " << objFilename << std::endl;
 
 	objFile.close();
+
+	unsigned j = 0;
+	unsigned numIndices = pointIndices.size();
+	for (unsigned i = 0; i < numIndices; i++) {
+		points.push_back(inputPoints[pointIndices[i].x]);
+		textures.push_back(inputTextures[textureIndices[i].x]);
+		normals.push_back(inputNormals[normalIndices[i].x]);
+
+		points.push_back(inputPoints[pointIndices[i].y]);
+		textures.push_back(inputTextures[textureIndices[i].y]);
+		normals.push_back(inputNormals[normalIndices[i].y]);
+
+		points.push_back(inputPoints[pointIndices[i].z]);
+		textures.push_back(inputTextures[textureIndices[i].z]);
+		normals.push_back(inputNormals[normalIndices[i].z]);
+
+		indices.push_back(glm::vec3(j, j + 1, j + 2));
+		j += 3;
+	}
 
 	/*
 	 * TODO: Section 4, you will need to normalize the object to fit in the
@@ -96,7 +130,7 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 	GLfloat minZ = points[0].z;
 	GLfloat maxZ = points[0].z;
 
-	int numPoints = points.size();
+	unsigned numPoints = points.size();
 
 	for (int i = 0; i < numPoints; i++) {
 		if (minX > points[i].x)

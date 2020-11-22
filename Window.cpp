@@ -82,9 +82,9 @@ bool Window::initializeObjects()
 
 	// Create point clouds consisting of objects vertices.
 	cube = new Geometry(glm::mat4(1), "cube.obj", pointSize, normalColoring, cubeMaterial);
-/*	cone = new Geometry(glm::mat4(1), "cone.obj", pointSize, normalColoring, coneMaterial);
+	cone = new Geometry(glm::mat4(1), "cone.obj", pointSize, normalColoring, coneMaterial);
 	cylinder = new Geometry(glm::mat4(1), "cylinder.obj", pointSize, normalColoring, cylinderMaterial);
-*/
+
 	// Set bunny to be the first to display
 	currGeometry = cube;
 
@@ -105,9 +105,9 @@ void Window::cleanUp()
 
 	// Deallcoate the objects.
 	delete cube;
-/*	delete cone;
+	delete cone;
 	delete cylinder;
-*/
+
 	delete skybox;
 	delete discoball;
 
@@ -200,9 +200,11 @@ void Window::displayCallback(GLFWwindow* window)
 	// Clear the color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Render the objects
 	skybox->draw(view, projection, skyboxShaderProgram);
 	discoball->draw(shaderProgram, projection * view);
+
+	// Render the objects
+	//currGeometry->draw(shaderProgram, projection * view);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
