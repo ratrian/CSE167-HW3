@@ -172,6 +172,11 @@ void Cube::spin(float deg)
 	model = model * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
+void Cube::zoom(glm::vec3 s)
+{
+	model = glm::scale(model, s);
+}
+
 unsigned int Cube::loadCubemap(std::vector<std::string> faces)
 {
 	unsigned int textureID;

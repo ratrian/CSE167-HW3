@@ -303,7 +303,7 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 			float rotAngle = velocity * 0.05;
 			glm::vec3 rotAxis = glm::cross(lastPoint, currPoint);
 			if (actionObject)
-				currGeometry->spin(rotAngle, rotAxis);
+				//currGeometry->spin(rotAngle, rotAxis);
 			if (actionLightSource)
 				lightSource->orbit(direction, rotAngle, rotAxis);
 		}
@@ -315,7 +315,7 @@ void Window::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
 	glMatrixMode(GL_PROJECTION);
 	if (actionObject)
-		currGeometry->zoom(glm::vec3(1.0 + yOffset * 0.01));
+		skybox->zoom(glm::vec3(1.0 + yOffset * 0.01));
 	if (actionLightSource)
 		lightSource->move(glm::vec3(yOffset * 0.01));
 }
