@@ -152,9 +152,6 @@ void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shade
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-
 	// Unbind the VAO and shader program
 	glBindVertexArray(0);
 	glUseProgram(0);
