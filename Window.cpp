@@ -208,7 +208,7 @@ void Window::displayCallback(GLFWwindow* window)
 	discoball->draw(shaderProgram, projection * view);
 
 	// Render the objects
-	//currGeometry->draw(shaderProgram, projection * view);
+	
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
@@ -307,7 +307,7 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 			float rotAngle = velocity * 0.05;
 			glm::vec3 rotAxis = glm::cross(lastPoint, currPoint);
 			if (actionObject)
-				//currGeometry->spin(rotAngle, rotAxis);
+				currGeometry->spin(rotAngle, rotAxis);
 			if (actionLightSource)
 				lightSource->orbit(direction, rotAngle, rotAxis);
 		}
@@ -319,7 +319,7 @@ void Window::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
 	glMatrixMode(GL_PROJECTION);
 	if (actionObject)
-		skybox->zoom(glm::vec3(1.0 + yOffset * 0.01));
+		currGeometry->zoom(glm::vec3(1.0 + yOffset * 0.01));
 	if (actionLightSource)
 		lightSource->move(glm::vec3(yOffset * 0.01));
 }
