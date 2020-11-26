@@ -24,10 +24,14 @@ public:
 	static PointLight* pointLight;
 	static LightSource* lightSource;
 
-	// Objects to Render
 	static Geometry* cube;
 	static Geometry* cone;
 	static Geometry* cylinder;
+
+	static Transform* world;
+	static Transform* cylinderSpin;
+	static Transform* cubeSuspension[8];
+	static Transform* cubeSpin[8];
 	
 	static Cube* skybox;
 	static Sphere* discoball;

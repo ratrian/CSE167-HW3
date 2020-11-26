@@ -17,11 +17,15 @@ Material* cylinderMaterial;
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
-// Objects to Render
 Geometry* Window::cube;
 Geometry* Window::cone;
 Geometry* Window::cylinder;
 Geometry* currGeometry;
+
+Transform* Window::world;
+Transform* Window::cylinderSpin;
+Transform* Window::cubeSuspension[8];
+Transform* Window::cubeSpin[8];
 
 Cube* Window::skybox;
 Sphere* Window::discoball;
@@ -31,8 +35,7 @@ GLfloat pointSize;
 
 // Camera Matrices
 // Projection matrix:
-glm::mat4 Window::projection; 
-
+glm::mat4 Window::projection;
 // View Matrix:
 glm::vec3 Window::eyePos(0, 0, 20);			// Camera position.
 glm::vec3 Window::lookAtPoint(0, 0, 0);		// The point we are looking at.
@@ -80,10 +83,28 @@ bool Window::initializeObjects()
 	pointLight = new PointLight(glm::vec3(6.0, 6.0, 6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource(glm::mat4(1), "sphere.obj", pointLight);
 
-	// Create point clouds consisting of objects vertices.
-	cube = new Geometry(glm::mat4(1), "cube.obj", pointSize, normalColoring, cubeMaterial);
 	cone = new Geometry(glm::mat4(1), "cone.obj", pointSize, normalColoring, coneMaterial);
 	cylinder = new Geometry(glm::mat4(1), "cylinder.obj", pointSize, normalColoring, cylinderMaterial);
+	cube = new Geometry(glm::mat4(1), "cube.obj", pointSize, normalColoring, cubeMaterial);
+
+	world = new Transform(glm::mat4(1));
+	cylinderSpin = new Transform(glm::mat4(1));
+	for (unsigned i = 0; i < 8; i++) {
+		cubeSuspension[i] = new Transform(glm::mat4(1));
+		cubeSpin[i] = new Transform(glm::mat4(1));
+	}
+
+	world->addChild(cylinderSpin);
+	for (unsigned i = 0; i < 8; i++) {
+		cylinderSpin->addChild(cubeSuspension[i]);
+		cubeSuspension[i]->addChild(cubeSpin[i]);
+	}
+	
+	world->addChild(cone);
+	cylinderSpin->addChild(cylinder);
+	for (unsigned i = 0; i < 8; i++) {
+		cubeSpin[i]->addChild(cube);
+	}
 
 	// Set bunny to be the first to display
 	currGeometry = cube;
@@ -103,10 +124,16 @@ void Window::cleanUp()
 	delete pointLight;
 	delete lightSource;
 
-	// Deallcoate the objects.
 	delete cube;
 	delete cone;
 	delete cylinder;
+
+	delete world;
+	delete cylinderSpin;
+	for (unsigned i = 0; i < 8; i++) {
+		delete cubeSuspension[i];
+		delete cubeSpin[i];
+	}
 
 	delete skybox;
 	delete discoball;
@@ -206,9 +233,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glDisable(GL_CULL_FACE);
 
 	discoball->draw(shaderProgram, projection * view);
-
-	// Render the objects
-	
+	//world->draw(shaderProgram, projection * view);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
