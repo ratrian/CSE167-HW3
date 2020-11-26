@@ -304,12 +304,20 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 		float velocity = glm::length(direction);
 		if (velocity > 0.0001)
 		{
-			float rotAngle = velocity * 0.05;
-			glm::vec3 rotAxis = glm::cross(lastPoint, currPoint);
 			if (actionObject)
-				currGeometry->spin(rotAngle, rotAxis);
+			{
+				eyePos.y += direction.y;
+				eyePos.z += direction.x;
+				lookAtPoint.y += direction.y;
+				lookAtPoint.z += direction.x;
+				view = glm::lookAt(eyePos, lookAtPoint, upVector);
+			}
 			if (actionLightSource)
+			{
+				float rotAngle = velocity * 0.05;
+				glm::vec3 rotAxis = glm::cross(lastPoint, currPoint);
 				lightSource->orbit(direction, rotAngle, rotAxis);
+			}
 		}
 		lastPoint = currPoint;
 	}
@@ -319,7 +327,12 @@ void Window::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
 	glMatrixMode(GL_PROJECTION);
 	if (actionObject)
-		currGeometry->zoom(glm::vec3(1.0 + yOffset * 0.01));
+	{
+		glm::mat4 mT = glm::translate(glm::mat4(1.0), -eyePos);
+		glm::mat4 mR = glm::rotate(glm::mat4(1.0), glm::degrees(GLfloat(yOffset * 0.001)), glm::vec3(0.0, 1.0, 0.0));
+		lookAtPoint = glm::vec3(inverse(mT) * mR * mT * glm::vec4(lookAtPoint, 1.0));
+		view = glm::lookAt(eyePos, lookAtPoint, upVector);
+	}
 	if (actionLightSource)
 		lightSource->move(glm::vec3(yOffset * 0.01));
 }
