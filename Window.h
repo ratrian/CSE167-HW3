@@ -28,7 +28,6 @@ public:
 	static Geometry* pole[6];
 	static Geometry* car[6];
 
-	static Transform* world;
 	static Transform* carouselTransform;
 	static Transform* poleTransform[6];
 	static Transform* carTransform[6];

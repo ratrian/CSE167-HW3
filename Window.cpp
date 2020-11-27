@@ -25,7 +25,6 @@ Geometry* Window::carousel;
 Geometry* Window::pole[6];
 Geometry* Window::car[6];
 
-Transform* Window::world;
 Transform* Window::carouselTransform;
 Transform* Window::poleTransform[6];
 Transform* Window::carTransform[6];
@@ -86,8 +85,6 @@ bool Window::initializeObjects()
 	pointLight = new PointLight(glm::vec3(-12.0, 3.0, -30.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
-	world = new Transform();
-
 	// Set up carousel.
 	carouselTransform = new Transform();
 	carouselTransform->translate(glm::vec3(0.0, 0.0, -20.0));
@@ -116,8 +113,6 @@ bool Window::initializeObjects()
 		carouselTransform->addChild(poleTransform[i]);
 	}
 
-	world->addChild(carouselTransform);
-
 	skybox = new Cube(1000);
 	discoball = new Sphere(eyePos);
 
@@ -139,7 +134,6 @@ void Window::cleanUp()
 		delete car[i];
 	}
 
-	delete world;
 	delete carouselTransform;
 	for (unsigned i = 0; i < 6; i++) {
 		delete poleTransform[i];
@@ -256,7 +250,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glDisable(GL_CULL_FACE);
 
 	discoball->draw(shaderProgram, projection * view);
-	world->draw(shaderProgram, projection * view);
+	carouselTransform->draw(shaderProgram, projection * view);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
