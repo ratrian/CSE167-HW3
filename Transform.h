@@ -18,7 +18,7 @@ public:
 	void draw(GLuint shaderProgram, glm::mat4 C);
 	void update(glm::mat4 C);
 	void translate(glm::vec3 t);
-	void spin(float rotAngle, glm::vec3 rotAxis);
+	void rotate(float rotAngle, glm::vec3 rotAxis);
 };
 
 #endif

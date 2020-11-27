@@ -29,7 +29,7 @@ void Transform::translate(glm::vec3 t)
 	M = M * mT;
 }
 
-void Transform::spin(float rotAngle, glm::vec3 rotAxis)
+void Transform::rotate(float rotAngle, glm::vec3 rotAxis)
 {
 	// Update the model matrix by multiplying a rotation matrix
 	glm::mat4 mR = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
