@@ -14,11 +14,11 @@ void Transform::draw(GLuint shaderProgram, glm::mat4 C)
 {
 	std::list<Node*>::iterator it;
 	for (it = children.begin(); it != children.end(); it++) {
-		(*it)->draw(shaderProgram, M * C);
+		(*it)->draw(shaderProgram, C * M);
 	}
 }
 
 void Transform::update(glm::mat4 C)
 {
-	M = C;
+	M = C * M;
 }
