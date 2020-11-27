@@ -124,6 +124,7 @@ void Sphere::draw(GLuint shaderProgram, glm::mat4 C)
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(modelView));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "C"), 1, GL_FALSE, glm::value_ptr(C));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "cameraPos"), 1, GL_FALSE, glm::value_ptr(eyePos));
+    glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 1.0);
 
     glBindVertexArray(vao);
     

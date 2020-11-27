@@ -187,7 +187,7 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 
 void Geometry::update(glm::mat4 C)
 {
-
+	modelView = C;
 }
 
 void Geometry::updatePointSize(GLfloat size) 

@@ -220,6 +220,12 @@ void Window::idleCallback()
 {
 	// Perform any necessary updates here
 	discoball->update(glm::mat4(1));
+	/*world->update();
+	cylinderSpin->update();
+	for (unsigned i = 0; i < 8; i++) {
+		cubeSuspension[i]->update();
+		cubeSpin[i]->update();
+	}*/
 }
 
 void Window::displayCallback(GLFWwindow* window)

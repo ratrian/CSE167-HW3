@@ -1,5 +1,6 @@
 #version 330 core
 
+uniform float drawDiscoball;
 uniform float normalColoring;
 uniform float drawSphere;
 
@@ -28,28 +29,38 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir);
 void main()
 {
     // Use the color passed in. An alpha of 1.0f means it is not transparent.
-    vec3 I = normalize(cameraPos - posOutput);
-    vec3 R = reflect(I, normalize(normalOutput));
-    fragColor = vec4(texture(skybox, R).rgb, 1.0);
+    if (drawDiscoball == 1.0)
+    {
+        vec3 I = normalize(cameraPos - posOutput);
+        vec3 R = reflect(I, normalize(normalOutput));
+        fragColor = vec4(texture(skybox, R).rgb, 1.0);
+    }
+    else if (drawDiscoball == 0.0)
+    {
+        vec3 norm = normalize(normalOutput);
 
-    /*vec3 norm = normalize(normalOutput);
-
-    if (drawSphere == 1.0) {
-        if (normalColoring == 1.0)
-            fragColor = vec4(vec3(0.0), 1.0);
-        else if (normalColoring == 0.0)
-            fragColor = vec4(lightCol, 1.0);
-    } else if (drawSphere == 0.0) {
-        if (normalColoring == 1.0) {
-            norm = 0.5 * norm + 0.5;
-            fragColor = vec4(norm, 1.0);
+        if (drawSphere == 1.0)
+        {
+            if (normalColoring == 1.0)
+                fragColor = vec4(vec3(0.0), 1.0);
+            else if (normalColoring == 0.0)
+                fragColor = vec4(lightCol, 1.0);
         }
-        else if (normalColoring == 0.0) {
-            vec3 viewDir = normalize(posOutput);
-            vec3 result = CalcPointLight(posOutput, norm, viewDir);
-            fragColor = vec4(result, 1.0);
+        else if (drawSphere == 0.0)
+        {
+            if (normalColoring == 1.0)
+            {
+                norm = 0.5 * norm + 0.5;
+                fragColor = vec4(norm, 1.0);
+            }
+            else if (normalColoring == 0.0)
+            {
+                vec3 viewDir = normalize(posOutput);
+                vec3 result = CalcPointLight(posOutput, norm, viewDir);
+                fragColor = vec4(result, 1.0);
+            }
         }
-    }*/
+    }
 }
 
 // Calculates the color when using a point light.
