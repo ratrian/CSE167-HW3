@@ -247,8 +247,8 @@ void Window::displayCallback(GLFWwindow* window)
 	skybox->draw(view, projection, skyboxShaderProgram);
 	glDisable(GL_CULL_FACE);
 
-	discoball->draw(shaderProgram, projection * view);
-	carouselTransform->draw(shaderProgram, projection * view);
+	discoball->draw(shaderProgram, projection, view, glm::mat4(1.0));
+	carouselTransform->draw(shaderProgram, projection, view, glm::mat4(1.0));
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
