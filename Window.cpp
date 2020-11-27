@@ -22,13 +22,13 @@ PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
 Geometry* Window::carousel;
-Geometry* Window::poll[6];
+Geometry* Window::pole[6];
 Geometry* Window::car[6];
 
 Transform* Window::world;
-Transform* Window::carouselSpin;
-Transform* Window::pollSpin[6];
-Transform* Window::carSpin[6];
+Transform* Window::carouselTransform;
+Transform* Window::poleTransform[6];
+Transform* Window::carTransform[6];
 
 Cube* Window::skybox;
 Sphere* Window::discoball;
@@ -86,28 +86,31 @@ bool Window::initializeObjects()
 	pointLight = new PointLight(glm::vec3(-12.0, 3.0, -30.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
-	carousel = new Geometry("cone.obj", 6.0f, pointSize, normalColoring, carouselMaterial);
-	/*cylinder = new Geometry("cylinder.obj", pointSize, normalColoring, cylinderMaterial);
-	cube = new Geometry("cube.obj", pointSize, normalColoring, cubeMaterial);*/
-
 	world = new Transform();
-	carouselSpin = new Transform();
-	/*for (unsigned i = 0; i < 6; i++) {
-		cubeSuspension[i] = new Transform(glm::mat4(1));
-		cubeSpin[i] = new Transform(glm::mat4(1));
-	}*/
 
-	world->addChild(carouselSpin);
-	/*for (unsigned i = 0; i < 6; i++) {
-		cylinderSpin->addChild(cubeSuspension[i]);
-		cubeSuspension[i]->addChild(cubeSpin[i]);
-	}*/
-	
-	carouselSpin->addChild(carousel);
-	/*cylinderSpin->addChild(cylinder);
+	// Set up carousel.
+	carouselTransform = new Transform();
+	carouselTransform->translate(glm::vec3(0.0, 0.0, -20.0));
+	carousel = new Geometry("cone.obj", 2.0f, pointSize, normalColoring, carouselMaterial);
+	carouselTransform->addChild(carousel);
+
+	// Set up rides.
 	for (unsigned i = 0; i < 6; i++) {
-		cubeSpin[i]->addChild(cube);
-	}*/
+		pole[i] = new Geometry("cylinder.obj", 2.0, pointSize, normalColoring, pollMaterial);
+		car[i] = new Geometry("cube.obj", 2.5, pointSize, normalColoring, carMaterial);
+
+		poleTransform[i] = new Transform();
+		carTransform[i] = new Transform();
+
+
+
+		poleTransform[i]->addChild(pole[i]);
+		carTransform[i]->addChild(car[i]);
+		poleTransform[i]->addChild(carTransform[i]);
+		carouselTransform->addChild(poleTransform[i]);
+	}
+
+	world->addChild(carouselTransform);
 
 	skybox = new Cube(1000);
 	discoball = new Sphere(eyePos);
@@ -126,15 +129,15 @@ void Window::cleanUp()
 
 	delete carousel;
 	for (unsigned i = 0; i < 6; i++) {
-		delete poll[i];
+		delete pole[i];
 		delete car[i];
 	}
 
 	delete world;
-	delete carouselSpin;
+	delete carouselTransform;
 	for (unsigned i = 0; i < 6; i++) {
-		delete pollSpin[i];
-		delete carSpin[i];
+		delete poleTransform[i];
+		delete carTransform[i];
 	}
 
 	delete skybox;

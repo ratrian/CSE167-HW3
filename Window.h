@@ -25,13 +25,13 @@ public:
 	static LightSource* lightSource;
 
 	static Geometry* carousel;
-	static Geometry* poll[6];
+	static Geometry* pole[6];
 	static Geometry* car[6];
 
 	static Transform* world;
-	static Transform* carouselSpin;
-	static Transform* pollSpin[6];
-	static Transform* carSpin[6];
+	static Transform* carouselTransform;
+	static Transform* poleTransform[6];
+	static Transform* carTransform[6];
 	
 	static Cube* skybox;
 	static Sphere* discoball;
