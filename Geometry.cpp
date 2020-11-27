@@ -1,7 +1,7 @@
 #include "Geometry.h"
 
-Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material)
-	: model(currC), pointSize(pointSize), normalColoring(normalColoring), material(material)
+Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material)
+	: pointSize(pointSize), normalColoring(normalColoring), material(material)
 {
 	/*
 	 * TODO: Section 2: Currently, all the points are hard coded below.
@@ -152,6 +152,8 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 		points[i].z -= centZ;
 	}
 
+	model = glm::mat4(1);
+
 	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -198,6 +200,8 @@ Geometry::~Geometry()
 
 void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 {
+	model = C * model;
+
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 

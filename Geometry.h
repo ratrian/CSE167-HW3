@@ -29,7 +29,7 @@ private:
 	Material* material;
 
 public:
-	Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material);
+	Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material);
 	~Geometry();
 	
 	void draw(GLuint shaderProgram, glm::mat4 C);

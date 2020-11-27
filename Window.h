@@ -18,20 +18,20 @@ public:
 	static int height;
 	static const char* windowTitle;
 
-	static bool activated, actionSkybox, actionLightSource, rotateWheel, rotateCarHorizontal, rotateCarVertical;
+	static bool activated, actionSkybox, actionLightSource, rotateCarousel, rotatePoll, rotateCar;
 	static glm::vec3 lastPoint;
 
 	static PointLight* pointLight;
 	static LightSource* lightSource;
 
-	static Geometry* cone;
-	static Geometry* cylinder;
-	static Geometry* cube;
+	static Geometry* carousel;
+	static Geometry* poll[6];
+	static Geometry* car[6];
 
 	static Transform* world;
-	static Transform* cylinderSpin;
-	static Transform* cubeSuspension[8];
-	static Transform* cubeSpin[8];
+	static Transform* carouselSpin;
+	static Transform* pollSpin[6];
+	static Transform* carSpin[6];
 	
 	static Cube* skybox;
 	static Sphere* discoball;
