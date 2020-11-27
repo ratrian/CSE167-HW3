@@ -101,10 +101,10 @@ bool Window::initializeObjects()
 	for (unsigned i = 0; i < 6; i++) {
 		cylinderSpin->addChild(cubeSuspension[i]);
 		cubeSuspension[i]->addChild(cubeSpin[i]);
-	}
+	}*/
 	
-	world->addChild(cone);
-	cylinderSpin->addChild(cylinder);
+	world->addChild(carousel);
+	/*cylinderSpin->addChild(cylinder);
 	for (unsigned i = 0; i < 6; i++) {
 		cubeSpin[i]->addChild(cube);
 	}*/

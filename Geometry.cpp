@@ -242,6 +242,11 @@ void Geometry::updateNormalColoring(GLfloat normalColoring)
 	Geometry::normalColoring = normalColoring;
 }
 
+void Geometry::move(glm::vec3 t)
+{
+	model = glm::translate(model, t);
+}
+
 void Geometry::spin(float rotAngle, glm::vec3 rotAxis)
 {
 	// Update the model matrix by multiplying a rotation matrix
