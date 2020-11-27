@@ -20,5 +20,18 @@ void Transform::draw(GLuint shaderProgram, glm::mat4 C)
 
 void Transform::update(glm::mat4 C)
 {
-	M = M * C;
+
+}
+
+void Transform::translate(glm::vec3 t)
+{
+	glm::mat4 mT = glm::translate(glm::mat4(1.0), t);
+	M = M * mT;
+}
+
+void Transform::spin(float rotAngle, glm::vec3 rotAxis)
+{
+	// Update the model matrix by multiplying a rotation matrix
+	glm::mat4 mR = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
+	M = M * mR;
 }
