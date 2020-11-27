@@ -1,6 +1,6 @@
 #include "Geometry.h"
 
-Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material)
+Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat pointSize, GLfloat normalColoring, Material* material)
 	: pointSize(pointSize), normalColoring(normalColoring), material(material)
 {
 	/*
@@ -99,7 +99,7 @@ Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalCol
 
 	objFile.close();
 
-	model = glm::mat4(1);
+	model = glm::mat4(scaleFactor);
 
 	unsigned j = 0;
 	unsigned numIndices = pointIndices.size();

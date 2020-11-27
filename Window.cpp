@@ -86,7 +86,7 @@ bool Window::initializeObjects()
 	pointLight = new PointLight(glm::vec3(-12.0, 3.0, -30.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
-	carousel = new Geometry("cone.obj", pointSize, normalColoring, coneMaterial);
+	carousel = new Geometry("cone.obj", 6.0f, pointSize, normalColoring, coneMaterial);
 	/*cylinder = new Geometry("cylinder.obj", pointSize, normalColoring, cylinderMaterial);
 	cube = new Geometry("cube.obj", pointSize, normalColoring, cubeMaterial);*/
 
