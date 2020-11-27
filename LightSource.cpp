@@ -1,6 +1,6 @@
 #include "LightSource.h"
 
-LightSource::LightSource(glm::mat4 currC, std::string objFilename, PointLight* pointLight) : modelView(currC), pointLight(pointLight)
+LightSource::LightSource(glm::mat4 currC, std::string objFilename, PointLight* pointLight) : model(currC), pointLight(pointLight)
 {
 	std::ifstream objFile(objFilename); // The obj file we are reading.
 
@@ -116,7 +116,7 @@ void LightSource::draw(GLuint shaderProgram, glm::mat4 C)
 	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(modelView));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "C"), 1, GL_FALSE, glm::value_ptr(C));
 	pointLight->sendLightToShader(shaderProgram);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawSphere"), 1.0);
@@ -134,20 +134,20 @@ void LightSource::draw(GLuint shaderProgram, glm::mat4 C)
 
 void LightSource::update(glm::mat4 C)
 {
-	modelView = C;
+	model = C;
 }
 
 void LightSource::orbit(glm::vec3 direction, float rotAngle, glm::vec3 rotAxis)
 {
 	glm::mat4 mT = glm::translate(glm::mat4(1.0), direction);
 	glm::mat4 mR = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
-	modelView = mT * modelView;
-	modelView = mR * modelView;
+	model = mT * model;
+	model = mR * model;
 	pointLight->orbit(direction, rotAngle, rotAxis);
 }
 
 void LightSource::move(glm::vec3 t)
 {
-	modelView = glm::translate(modelView, t);
+	model = glm::translate(model, t);
 	pointLight->move(t);
 }

@@ -16,7 +16,7 @@ using namespace std;
 class LightSource : public Node
 {
 private:
-	glm::mat4 modelView;
+	glm::mat4 model;
 
 	std::vector<glm::vec3> points;
 	std::vector<glm::vec3> normals;

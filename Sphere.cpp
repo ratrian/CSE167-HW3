@@ -8,7 +8,7 @@
 #include "Sphere.h"
 
 /* Code sampled from https://gist.github.com/zwzmzd/0195733fa1210346b00d, adjusted to use GL_QUADS instead of GL_QUADS_STRIP */
-Sphere::Sphere(glm::mat4 currC, glm::vec3 eyePos) : modelView(currC), eyePos(eyePos)
+Sphere::Sphere(glm::mat4 currC, glm::vec3 eyePos) : model(currC), eyePos(eyePos)
 {
     int i, j;
     std::vector<GLfloat> vertices;
@@ -121,7 +121,7 @@ void Sphere::draw(GLuint shaderProgram, glm::mat4 C)
 {
     glUseProgram(shaderProgram);
 
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(modelView));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "C"), 1, GL_FALSE, glm::value_ptr(C));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "cameraPos"), 1, GL_FALSE, glm::value_ptr(eyePos));
     glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 1.0);
@@ -147,5 +147,5 @@ void Sphere::update(glm::mat4 C)
 void Sphere::spin(float deg)
 {
     // Update the model matrix by multiplying a rotation matrix
-    modelView = modelView * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = model * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 0.0f, 1.0f));
 }

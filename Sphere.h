@@ -16,7 +16,7 @@
 
 class Sphere : public Node {
 	public:
-		glm::mat4 modelView;
+		glm::mat4 model;
 		glm::vec3 eyePos;
 
 		GLuint vao = 0, vbo = 0, vbo_n = 0, ebo = 0;

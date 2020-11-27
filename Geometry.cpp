@@ -1,7 +1,7 @@
 #include "Geometry.h"
 
 Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, GLfloat normalColoring, Material* material)
-	: modelView(currC), pointSize(pointSize), normalColoring(normalColoring), material(material)
+	: model(currC), pointSize(pointSize), normalColoring(normalColoring), material(material)
 {
 	/*
 	 * TODO: Section 2: Currently, all the points are hard coded below.
@@ -202,7 +202,7 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(modelView));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "C"), 1, GL_FALSE, glm::value_ptr(C));
 	glUniform1f(glGetUniformLocation(shaderProgram, "pointSize"), pointSize);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 0.0);
@@ -242,10 +242,10 @@ void Geometry::spin(float rotAngle, glm::vec3 rotAxis)
 {
 	// Update the model matrix by multiplying a rotation matrix
 	glm::mat4 m = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
-	modelView = m * modelView;
+	model = m * model;
 }
 
 void Geometry::zoom(glm::vec3 s)
 {
-	modelView = glm::scale(modelView, s);
+	model = glm::scale(model, s);
 }
