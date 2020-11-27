@@ -171,6 +171,7 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, glm::value_ptr(modelView));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "C"), 1, GL_FALSE, glm::value_ptr(C));
 	glUniform1f(glGetUniformLocation(shaderProgram, "pointSize"), pointSize);
+	glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 0.0);
 	glUniform1f(glGetUniformLocation(shaderProgram, "normalColoring"), normalColoring);
 	material->sendMatToShader(shaderProgram);
 

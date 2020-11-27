@@ -81,10 +81,10 @@ bool Window::initializeObjects()
 	cylinderMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
 
 	pointLight = new PointLight(glm::vec3(6.0, 6.0, 6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
-	lightSource = new LightSource(glm::mat4(1), "sphere.obj", pointLight);
+	lightSource = new LightSource(glm::mat4(0.7), "sphere.obj", pointLight);
 
-	cone = new Geometry(glm::mat4(1), "cone.obj", pointSize, normalColoring, coneMaterial);
-	cylinder = new Geometry(glm::mat4(1), "cylinder.obj", pointSize, normalColoring, cylinderMaterial);
+	cone = new Geometry(glm::mat4(2), "cone.obj", pointSize, normalColoring, coneMaterial);
+	cylinder = new Geometry(glm::mat4(6), "cylinder.obj", pointSize, normalColoring, cylinderMaterial);
 	cube = new Geometry(glm::mat4(1), "cube.obj", pointSize, normalColoring, cubeMaterial);
 
 	world = new Transform(glm::mat4(1));
@@ -106,11 +106,11 @@ bool Window::initializeObjects()
 		cubeSpin[i]->addChild(cube);
 	}
 
-	// Set bunny to be the first to display
+	// Set cube to be the first to display
 	currGeometry = cube;
 
 	skybox = new Cube(1000);
-	discoball = new Sphere(glm::rotate(glm::mat4(5), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)), eyePos);
+	discoball = new Sphere(glm::rotate(glm::mat4(3), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)), eyePos);
 
 	return true;
 }
@@ -239,8 +239,8 @@ void Window::displayCallback(GLFWwindow* window)
 	glDisable(GL_CULL_FACE);
 
 	discoball->draw(shaderProgram, projection * view);
-	/*world->draw(shaderProgram, projection * view);
-	lightSource->draw(shaderProgram, projection * view);*/
+	world->draw(shaderProgram, projection * view);
+	lightSource->draw(shaderProgram, projection * view);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();

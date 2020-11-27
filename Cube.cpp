@@ -23,7 +23,7 @@ Cube::Cube(float size)
 	 *
 	 */
 
-	// The 8 vertices of a cube.
+	// The vertices of a cube map.
 	std::vector<glm::vec3> vertices
 	{
 		glm::vec3(-1.0f,  1.0f, -1.0f),
