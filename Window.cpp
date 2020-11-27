@@ -14,9 +14,9 @@ bool Window::rotateCarousel = false;
 bool Window::rotatePoll = false;
 bool Window::rotateCar = false;
 
-Material* cubeMaterial;
-Material* coneMaterial;
-Material* cylinderMaterial;
+Material* carouselMaterial;
+Material* pollMaterial;
+Material* carMaterial;
 
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
@@ -79,14 +79,14 @@ bool Window::initializeObjects()
 {
 	pointSize = 30.0;
 
-	cubeMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
-	coneMaterial = new Material(glm::vec3(0.25, 0.20725, 0.20725), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
-	cylinderMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
+	carouselMaterial = new Material(glm::vec3(0.25, 0.20725, 0.20725), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
+	pollMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
+	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
 
 	pointLight = new PointLight(glm::vec3(-12.0, 3.0, -30.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
-	carousel = new Geometry("cone.obj", 6.0f, pointSize, normalColoring, coneMaterial);
+	carousel = new Geometry("cone.obj", 6.0f, pointSize, normalColoring, carouselMaterial);
 	/*cylinder = new Geometry("cylinder.obj", pointSize, normalColoring, cylinderMaterial);
 	cube = new Geometry("cube.obj", pointSize, normalColoring, cubeMaterial);*/
 
@@ -117,9 +117,9 @@ bool Window::initializeObjects()
 
 void Window::cleanUp()
 {
-	delete cubeMaterial;
-	delete coneMaterial;
-	delete cylinderMaterial;
+	delete carouselMaterial;
+	delete pollMaterial;
+	delete carMaterial;
 
 	delete pointLight;
 	delete lightSource;
