@@ -6,9 +6,13 @@ int Window::height;
 const char* Window::windowTitle = "GLFW Starter Project";
 
 bool Window::activated = false;
-bool Window::actionObject = true;
+bool Window::actionSkybox = true;
 bool Window::actionLightSource = false;
 glm::vec3 Window::lastPoint;
+
+bool Window::rotateWheel = false;
+bool Window::rotateCarHorizontal = false;
+bool Window::rotateCarVertical = false;
 
 Material* cubeMaterial;
 Material* coneMaterial;
@@ -17,10 +21,9 @@ Material* cylinderMaterial;
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
-Geometry* Window::cube;
 Geometry* Window::cone;
 Geometry* Window::cylinder;
-Geometry* currGeometry;
+Geometry* Window::cube;
 
 Transform* Window::world;
 Transform* Window::cylinderSpin;
@@ -80,7 +83,7 @@ bool Window::initializeObjects()
 	coneMaterial = new Material(glm::vec3(0.25, 0.20725, 0.20725), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
 	cylinderMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
 
-	pointLight = new PointLight(glm::vec3(6.0, 6.0, 6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(10.0, -3.0, 6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource(glm::mat4(0.7), "sphere.obj", pointLight);
 
 	cone = new Geometry(glm::translate(glm::mat4(2.0), glm::vec3(0.0, -10.0, 0.0)), "cone.obj", pointSize, normalColoring, coneMaterial);
@@ -106,9 +109,6 @@ bool Window::initializeObjects()
 		cubeSpin[i]->addChild(cube);
 	}
 
-	// Set cube to be the first to display
-	currGeometry = cube;
-
 	skybox = new Cube(1000);
 	discoball = new Sphere(glm::rotate(glm::mat4(3), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)), eyePos);
 
@@ -124,9 +124,9 @@ void Window::cleanUp()
 	delete pointLight;
 	delete lightSource;
 
-	delete cube;
 	delete cone;
 	delete cylinder;
+	delete cube;
 
 	delete world;
 	delete cylinderSpin;
@@ -220,12 +220,18 @@ void Window::idleCallback()
 {
 	// Perform any necessary updates here
 	discoball->update(glm::mat4(1));
-	/*world->update();
-	cylinderSpin->update();
-	for (unsigned i = 0; i < 8; i++) {
-		cubeSuspension[i]->update();
-		cubeSpin[i]->update();
-	}*/
+	if (rotateWheel)
+		//cylinderSpin->update();
+	if (rotateCarHorizontal) {
+		for (unsigned i = 0; i < 8; i++) {
+			//cubeSuspension[i]->update();
+		}
+	}
+	if (rotateCarVertical) {
+		for (unsigned i = 0; i < 8; i++) {
+			//cubeSpin[i]->update();
+		}
+	}
 }
 
 void Window::displayCallback(GLFWwindow* window)
@@ -267,42 +273,25 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 
 		// switch between the cube and the cube Geometry
 		case GLFW_KEY_F1:
-			currGeometry = cube;
-			break;
-		case GLFW_KEY_F2:
-			currGeometry = cone;
-			break;
-		case GLFW_KEY_F3:
-			currGeometry = cylinder;
-			break;
-		case GLFW_KEY_S:
-			pointSize = pointSize / 2;
-			currGeometry->updatePointSize(pointSize);
-			break;
-		case GLFW_KEY_L:
-			pointSize = pointSize * 2;
-			currGeometry->updatePointSize(pointSize);
-			break;
-		case GLFW_KEY_N:
-			if (normalColoring == 0.0) {
-				normalColoring = 1.0;
-			}
-			else if (normalColoring == 1.0) {
-				normalColoring = 0.0;
-			}
-			currGeometry->updateNormalColoring(normalColoring);
-			break;
-		case GLFW_KEY_1:
-			actionObject = true;
+			actionSkybox = true;
 			actionLightSource = false;
 			break;
-		case GLFW_KEY_2:
-			actionObject = false;
+		case GLFW_KEY_F2:
+			actionSkybox = false;
 			actionLightSource = true;
 			break;
-		case GLFW_KEY_3:
-			actionObject = true;
+		case GLFW_KEY_F3:
+			actionSkybox = true;
 			actionLightSource = true;
+			break;
+		case GLFW_KEY_1:
+			rotateWheel = !rotateWheel;
+			break;
+		case GLFW_KEY_2:
+			rotateCarHorizontal = !rotateCarHorizontal;
+			break;
+		case GLFW_KEY_3:
+			rotateCarVertical = !rotateCarVertical;
 			break;
 
 		default:
@@ -336,7 +325,7 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 		float velocity = glm::length(direction);
 		if (velocity > 0.0001)
 		{
-			if (actionObject)
+			if (actionSkybox)
 			{
 				eyePos.y += direction.y;
 				eyePos.z += direction.x;
@@ -358,7 +347,7 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 void Window::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
 	glMatrixMode(GL_PROJECTION);
-	if (actionObject)
+	if (actionSkybox)
 	{
 		glm::mat4 mT = glm::translate(glm::mat4(1.0), -eyePos);
 		glm::mat4 mR = glm::rotate(glm::mat4(1.0), glm::degrees(GLfloat(yOffset * 0.001)), glm::vec3(0.0, 1.0, 0.0));

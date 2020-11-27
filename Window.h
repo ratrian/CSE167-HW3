@@ -18,15 +18,15 @@ public:
 	static int height;
 	static const char* windowTitle;
 
-	static bool activated, actionObject, actionLightSource;
+	static bool activated, actionSkybox, actionLightSource, rotateWheel, rotateCarHorizontal, rotateCarVertical;
 	static glm::vec3 lastPoint;
 
 	static PointLight* pointLight;
 	static LightSource* lightSource;
 
-	static Geometry* cube;
 	static Geometry* cone;
 	static Geometry* cylinder;
+	static Geometry* cube;
 
 	static Transform* world;
 	static Transform* cylinderSpin;
