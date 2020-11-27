@@ -118,6 +118,40 @@ Geometry::Geometry(glm::mat4 currC, std::string objFilename, GLfloat pointSize, 
 		j += 3;
 	}
 
+	GLfloat minX = points[0].x;
+	GLfloat maxX = points[0].x;
+	GLfloat minY = points[0].y;
+	GLfloat maxY = points[0].y;
+	GLfloat minZ = points[0].z;
+	GLfloat maxZ = points[0].z;
+
+	int numPoints = points.size();
+
+	for (int i = 0; i < numPoints; i++) {
+		if (minX > points[i].x)
+			minX = points[i].x;
+		if (maxX < points[i].x)
+			maxX = points[i].x;
+		if (minY > points[i].y)
+			minY = points[i].y;
+		if (maxY < points[i].y)
+			maxY = points[i].y;
+		if (minZ > points[i].z)
+			minZ = points[i].z;
+		if (maxZ < points[i].z)
+			maxZ = points[i].z;
+	}
+
+	GLfloat centX = (minX + maxX) / 2;
+	GLfloat centY = (minY + maxY) / 2;
+	GLfloat centZ = (minZ + maxZ) / 2;
+
+	for (int i = 0; i < numPoints; i++) {
+		points[i].x -= centX;
+		points[i].y -= centY;
+		points[i].z -= centZ;
+	}
+
 	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
