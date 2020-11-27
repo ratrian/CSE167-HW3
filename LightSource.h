@@ -29,7 +29,7 @@ private:
 	PointLight* pointLight;
 
 public:
-	LightSource(glm::mat4 currC, std::string objFilename, PointLight* pointLight);
+	LightSource(std::string objFilename, PointLight* pointLight);
 	~LightSource();
 
 	void draw(GLuint shaderProgram, glm::mat4 C);

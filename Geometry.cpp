@@ -99,6 +99,8 @@ Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalCol
 
 	objFile.close();
 
+	model = glm::mat4(1);
+
 	unsigned j = 0;
 	unsigned numIndices = pointIndices.size();
 	for (unsigned i = 0; i < numIndices; i++) {
@@ -151,8 +153,6 @@ Geometry::Geometry(std::string objFilename, GLfloat pointSize, GLfloat normalCol
 		points[i].y -= centY;
 		points[i].z -= centZ;
 	}
-
-	model = glm::mat4(1);
 
 	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);

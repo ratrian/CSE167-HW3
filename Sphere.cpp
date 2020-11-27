@@ -8,8 +8,10 @@
 #include "Sphere.h"
 
 /* Code sampled from https://gist.github.com/zwzmzd/0195733fa1210346b00d, adjusted to use GL_QUADS instead of GL_QUADS_STRIP */
-Sphere::Sphere(glm::mat4 currC, glm::vec3 eyePos) : model(currC), eyePos(eyePos)
+Sphere::Sphere(glm::vec3 eyePos) : eyePos(eyePos)
 {
+    model = glm::rotate(glm::mat4(3), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
     int i, j;
     std::vector<GLfloat> vertices;
     std::vector<GLuint> indices;

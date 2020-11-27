@@ -84,7 +84,7 @@ bool Window::initializeObjects()
 	cylinderMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
 
 	pointLight = new PointLight(glm::vec3(-12.0, 3.0, -30.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
-	lightSource = new LightSource(glm::mat4(0.7), "sphere.obj", pointLight);
+	lightSource = new LightSource("sphere.obj", pointLight);
 
 	carousel = new Geometry("cone.obj", pointSize, normalColoring, coneMaterial);
 	/*cylinder = new Geometry("cylinder.obj", pointSize, normalColoring, cylinderMaterial);
@@ -110,7 +110,7 @@ bool Window::initializeObjects()
 	}*/
 
 	skybox = new Cube(1000);
-	discoball = new Sphere(glm::rotate(glm::mat4(3), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)), eyePos);
+	discoball = new Sphere(eyePos);
 
 	return true;
 }

@@ -1,6 +1,6 @@
 #include "LightSource.h"
 
-LightSource::LightSource(glm::mat4 currC, std::string objFilename, PointLight* pointLight) : model(currC), pointLight(pointLight)
+LightSource::LightSource(std::string objFilename, PointLight* pointLight) : pointLight(pointLight)
 {
 	std::ifstream objFile(objFilename); // The obj file we are reading.
 
@@ -64,6 +64,8 @@ LightSource::LightSource(glm::mat4 currC, std::string objFilename, PointLight* p
 		std::cerr << "Can't open the file " << objFilename << std::endl;
 
 	objFile.close();
+
+	model = glm::mat4(0.7);
 
 	int numPoints = points.size();
 	for (int i = 0; i < numPoints; i++) {
