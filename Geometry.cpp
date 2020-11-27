@@ -200,8 +200,6 @@ Geometry::~Geometry()
 
 void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 {
-	model = C * model;
-
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 
