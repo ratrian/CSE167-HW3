@@ -93,22 +93,20 @@ bool Window::initializeObjects()
 
 	// Set up rides.
 	for (unsigned i = 0; i < 6; i++) {
-		pole[i] = new Geometry("cylinder.obj", 2.0, pointSize, normalColoring, pollMaterial);
-		car[i] = new Geometry("cube.obj", 2.5, pointSize, normalColoring, carMaterial);
-
 		poleTransform[i] = new Transform();
-		carTransform[i] = new Transform();
-
 		glm::vec3 offset = glm::vec3(0, 0, 13);
 		float radians = glm::radians(360.0f * ((i + 1.0f) / 6));
 		glm::vec3 position = glm::vec3(offset.x * cos(radians) + offset.z * sin(radians), offset.y, offset.x * sin(radians) - offset.z * cos(radians));
 		poleTransform[i]->translate(position);
 		poleTransform[i]->rotate(360.0f * ((i + 1.0f) / 6), glm::vec3(0.0, 1.0, 0.0));
-
-		carTransform[i]->translate(glm::vec3(0.0, 8.5, 4.0));
-
+		pole[i] = new Geometry("cylinder.obj", 2.0, pointSize, normalColoring, pollMaterial);
 		poleTransform[i]->addChild(pole[i]);
+
+		carTransform[i] = new Transform();
+		carTransform[i]->translate(glm::vec3(0.0, 8.5, 4.0));
+		car[i] = new Geometry("cube.obj", 2.5, pointSize, normalColoring, carMaterial);
 		carTransform[i]->addChild(car[i]);
+
 		poleTransform[i]->addChild(carTransform[i]);
 		carouselTransform->addChild(poleTransform[i]);
 	}
