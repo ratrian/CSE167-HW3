@@ -30,7 +30,7 @@ Transform* Window::cubeSpin[8];
 Cube* Window::skybox;
 Sphere* Window::discoball;
 
-GLfloat Window::normalColoring = 1.0;
+GLfloat Window::normalColoring = 0.0;
 GLfloat pointSize;
 
 // Camera Matrices
@@ -239,7 +239,8 @@ void Window::displayCallback(GLFWwindow* window)
 	glDisable(GL_CULL_FACE);
 
 	discoball->draw(shaderProgram, projection * view);
-	//world->draw(shaderProgram, projection * view);
+	/*world->draw(shaderProgram, projection * view);
+	lightSource->draw(shaderProgram, projection * view);*/
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();

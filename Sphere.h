@@ -21,8 +21,8 @@ class Sphere : public Node {
 
 		GLuint vao = 0, vbo = 0, vbo_n = 0, ebo = 0;
 
-		int stackCount = 400;
-		int sectorCount = 400;
+		int stackCount = 40;
+		int sectorCount = 40;
 		int numsToDraw;
 
 		Sphere(glm::mat4 currC, glm::vec3 eyePos);
