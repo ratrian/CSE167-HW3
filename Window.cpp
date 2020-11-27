@@ -26,9 +26,9 @@ Geometry* Window::poll[6];
 Geometry* Window::car[6];
 
 Transform* Window::world;
-/*Transform* Window::cylinderSpin;
-Transform* Window::cubeSuspension[6];
-Transform* Window::cubeSpin[6];*/
+Transform* Window::carouselSpin;
+Transform* Window::pollSpin[6];
+Transform* Window::carSpin[6];
 
 Cube* Window::skybox;
 Sphere* Window::discoball;
@@ -91,19 +91,19 @@ bool Window::initializeObjects()
 	cube = new Geometry("cube.obj", pointSize, normalColoring, cubeMaterial);*/
 
 	world = new Transform();
-	/*cylinderSpin = new Transform(glm::mat4(1));
-	for (unsigned i = 0; i < 6; i++) {
+	carouselSpin = new Transform();
+	/*for (unsigned i = 0; i < 6; i++) {
 		cubeSuspension[i] = new Transform(glm::mat4(1));
 		cubeSpin[i] = new Transform(glm::mat4(1));
-	}
+	}*/
 
-	world->addChild(cylinderSpin);
-	for (unsigned i = 0; i < 6; i++) {
+	world->addChild(carouselSpin);
+	/*for (unsigned i = 0; i < 6; i++) {
 		cylinderSpin->addChild(cubeSuspension[i]);
 		cubeSuspension[i]->addChild(cubeSpin[i]);
 	}*/
 	
-	world->addChild(carousel);
+	carouselSpin->addChild(carousel);
 	/*cylinderSpin->addChild(cylinder);
 	for (unsigned i = 0; i < 6; i++) {
 		cubeSpin[i]->addChild(cube);
@@ -125,15 +125,17 @@ void Window::cleanUp()
 	delete lightSource;
 
 	delete carousel;
-	/*delete cylinder;
-	delete cube;*/
+	for (unsigned i = 0; i < 6; i++) {
+		delete poll[i];
+		delete car[i];
+	}
 
 	delete world;
-	/*delete cylinderSpin;
+	delete carouselSpin;
 	for (unsigned i = 0; i < 6; i++) {
-		delete cubeSuspension[i];
-		delete cubeSpin[i];
-	}*/
+		delete pollSpin[i];
+		delete carSpin[i];
+	}
 
 	delete skybox;
 	delete discoball;
@@ -245,7 +247,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glDisable(GL_CULL_FACE);
 
 	discoball->draw(shaderProgram, projection * view);
-	//world->draw(shaderProgram, projection * view);
+	world->draw(shaderProgram, projection * view);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
