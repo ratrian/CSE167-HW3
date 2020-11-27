@@ -83,12 +83,12 @@ bool Window::initializeObjects()
 	coneMaterial = new Material(glm::vec3(0.25, 0.20725, 0.20725), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
 	cylinderMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
 
-	pointLight = new PointLight(glm::vec3(10.0, -3.0, 6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(-12.0, 3.0, -30.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource(glm::mat4(0.7), "sphere.obj", pointLight);
 
-	cone = new Geometry(glm::translate(glm::mat4(2.0), glm::vec3(0.0, -10.0, 0.0)), "cone.obj", pointSize, normalColoring, coneMaterial);
-	cylinder = new Geometry(glm::translate(glm::mat4(5.0), glm::vec3(0.0, -2.0, 0.0)), "cylinder.obj", pointSize, normalColoring, cylinderMaterial);
-	cube = new Geometry(glm::translate(glm::mat4(2.0), glm::vec3(-5.0, -5.0, 0.0)), "cube.obj", pointSize, normalColoring, cubeMaterial);
+	cone = new Geometry(glm::translate(glm::mat4(2.0), glm::vec3(-10.0, -3.0, -30.0)), "cone.obj", pointSize, normalColoring, coneMaterial);
+	cylinder = new Geometry(glm::translate(glm::mat4(2.0), glm::vec3(-10.0, 2.0, -30.0)), "cylinder.obj", pointSize, normalColoring, cylinderMaterial);
+	cube = new Geometry(glm::translate(glm::mat4(2.0), glm::vec3(-15.0, 2.0, -30.0)), "cube.obj", pointSize, normalColoring, cubeMaterial);
 
 	world = new Transform(glm::mat4(1));
 	cylinderSpin = new Transform(glm::mat4(1));
