@@ -200,8 +200,6 @@ Geometry::~Geometry()
 
 void Geometry::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view, glm::mat4 C)
 {
-	model = C * model;
-
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 
@@ -225,7 +223,7 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view, 
 	glUseProgram(0);
 }
 
-void Geometry::update(glm::mat4 C)
+void Geometry::update()
 {
 
 }

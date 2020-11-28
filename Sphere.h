@@ -29,7 +29,7 @@ class Sphere : public Node {
 		~Sphere();
 
 		void draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view, glm::mat4 C);
-		void update(glm::mat4 C);
+		void update();
 		void spin(float deg);
 };
 

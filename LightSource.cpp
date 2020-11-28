@@ -137,9 +137,9 @@ void LightSource::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 vie
 	glUseProgram(0);
 }
 
-void LightSource::update(glm::mat4 C)
+void LightSource::update()
 {
-	model = C;
+
 }
 
 void LightSource::orbit(glm::vec3 direction, float rotAngle, glm::vec3 rotAxis)

@@ -143,7 +143,7 @@ void Sphere::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view, gl
     glUseProgram(0);
 }
 
-void Sphere::update(glm::mat4 C)
+void Sphere::update()
 {
     // Spin the cube by 1 degree.
     spin(0.1f);

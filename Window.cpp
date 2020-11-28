@@ -87,7 +87,7 @@ bool Window::initializeObjects()
 
 	// Set up carousel.
 	carouselTransform = new Transform();
-	carouselTransform->translate(glm::vec3(0.0, 0.0, -20.0));
+	carouselTransform->translate(glm::vec3(0.0, -4.0, 0.0));
 	carousel = new Geometry("cone.obj", 2.0f, pointSize, normalColoring, carouselMaterial);
 	carouselTransform->addChild(carousel);
 
@@ -222,7 +222,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 void Window::idleCallback()
 {
 	// Perform any necessary updates here
-	discoball->update(glm::mat4(1));
+	discoball->update();
 	if (rotateCarousel)
 		//cylinderSpin->update();
 	if (rotatePoll) {
