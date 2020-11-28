@@ -92,7 +92,7 @@ bool Window::initializeObjects()
 	carouselTransform->addChild(carousel);
 
 	// Set up rides.
-	/*for (unsigned i = 0; i < 6; i++) {
+	for (unsigned i = 0; i < 6; i++) {
 		poleTransform[i] = new Transform();
 		glm::vec3 offset = glm::vec3(0, 0, 13);
 		float radians = glm::radians(360.0f * ((i + 1.0f) / 6));
@@ -109,7 +109,7 @@ bool Window::initializeObjects()
 
 		poleTransform[i]->addChild(carTransform[i]);
 		carouselTransform->addChild(poleTransform[i]);
-	}*/
+	}
 
 	skybox = new Cube(1000);
 	discoball = new Sphere(eyePos);
@@ -224,15 +224,15 @@ void Window::idleCallback()
 	// Perform any necessary updates here
 	discoball->update();
 	if (rotateCarousel)
-		//cylinderSpin->update();
+		carouselTransform->update();
 	if (rotatePoll) {
-		for (unsigned i = 0; i < 8; i++) {
-			//cubeSuspension[i]->update();
+		for (unsigned i = 0; i < 6; i++) {
+			poleTransform[i]->update();
 		}
 	}
 	if (rotateCar) {
-		for (unsigned i = 0; i < 8; i++) {
-			//cubeSpin[i]->update();
+		for (unsigned i = 0; i < 6; i++) {
+			carTransform[i]->update();
 		}
 	}
 }
