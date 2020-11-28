@@ -24,6 +24,7 @@ public:
 	static PointLight* pointLight;
 	static LightSource* lightSource;
 
+	static Geometry* ground;
 	static Geometry* carousel;
 	static Geometry* pole[6];
 	static Geometry* car[6];

@@ -14,6 +14,7 @@ bool Window::rotateCarousel = false;
 bool Window::rotatePole = false;
 bool Window::rotateCar = false;
 
+Material* groundMaterial;
 Material* carouselMaterial;
 Material* poleMaterial;
 Material* carMaterial;
@@ -21,6 +22,7 @@ Material* carMaterial;
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
+Geometry* Window::ground;
 Geometry* Window::carousel;
 Geometry* Window::pole[6];
 Geometry* Window::car[6];
@@ -78,12 +80,16 @@ bool Window::initializeObjects()
 {
 	pointSize = 30.0;
 
-	carouselMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
+	groundMaterial = new Material(glm::vec3(0.1, 0.18725, 0.1745), glm::vec3(0.396, 0.74151, 0.69102), glm::vec3(0.297254, 0.30829, 0.306678), 0.1);
+	carouselMaterial = new Material(glm::vec3(0.1745, 0.01175, 0.01175), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	poleMaterial = new Material(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
-	carMaterial = new Material(glm::vec3(0.1, 0.18725, 0.1745), glm::vec3(0.396, 0.74151, 0.69102), glm::vec3(0.297254, 0.30829, 0.306678), 0.1);
-
+	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
+	
 	pointLight = new PointLight(glm::vec3(-14.5, -16.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
+
+	// Set up ground.
+	ground = new Geometry("cube.obj", 8.0f, pointSize, normalColoring, groundMaterial);
 
 	// Set up carousel.
 	carouselTransform = new Transform();
@@ -119,6 +125,7 @@ bool Window::initializeObjects()
 
 void Window::cleanUp()
 {
+	delete groundMaterial;
 	delete carouselMaterial;
 	delete poleMaterial;
 	delete carMaterial;
@@ -126,6 +133,7 @@ void Window::cleanUp()
 	delete pointLight;
 	delete lightSource;
 
+	delete ground;
 	delete carousel;
 	for (unsigned i = 0; i < 6; i++) {
 		delete pole[i];
@@ -250,6 +258,7 @@ void Window::displayCallback(GLFWwindow* window)
 	discoball->draw(shaderProgram, projection, view, glm::mat4(1.0));
 	lightSource->draw(shaderProgram, projection, view, glm::mat4(1.0));
 	carouselTransform->draw(shaderProgram, projection, view, glm::mat4(1.0));
+	//ground->draw(shaderProgram, projection, view, glm::mat4(1.0));
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
