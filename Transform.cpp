@@ -22,7 +22,7 @@ void Transform::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view,
 
 void Transform::update()
 {
-
+	rotate(0.0002f, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Transform::translate(glm::vec3 t)
