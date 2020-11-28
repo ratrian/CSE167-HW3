@@ -138,8 +138,8 @@ void Window::cleanUp()
 	delete pointLight;
 	delete lightSource;
 
-	delete ground;
 	delete carousel;
+	delete ground;
 	for (unsigned i = 0; i < 6; i++) {
 		delete pole[i];
 		delete car[i];
