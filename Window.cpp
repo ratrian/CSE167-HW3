@@ -104,7 +104,6 @@ bool Window::initializeObjects()
 		poleTransform[i]->addChild(pole[i]);
 
 		carTransform[i] = new Transform();
-		carTransform[i]->translate(glm::vec3(0.0, 0.0, 0.0));
 		car[i] = new Geometry("cube.obj", 2.0, pointSize, normalColoring, carMaterial);
 		carTransform[i]->addChild(car[i]);
 
