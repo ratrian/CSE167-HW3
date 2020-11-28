@@ -86,7 +86,7 @@ bool Window::initializeObjects()
 	poleMaterial = new Material(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
 	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
 	
-	pointLight = new PointLight(glm::vec3(-14.5, -16.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(-8.5, -12.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Set up carousel.
@@ -237,16 +237,18 @@ void Window::idleCallback()
 {
 	// Perform any necessary updates here
 	discoball->update();
-	if (rotateCarousel)
-		carouselTransform->rotate(0.0002f, glm::vec3(0.0, 1.0, 0.0));
+	if (rotateCarousel) {
+		carouselTransform->rotate(0.0002f, glm::vec3(0.0f, 1.0f, 0.0f));
+		groundTransform->rotate(-0.0002f, glm::vec3(0.0f, 1.0f, 0.0f));
+	}
 	if (rotatePole) {
 		for (unsigned i = 0; i < 6; i++) {
-			poleTransform[i]->rotate(0.0002f, glm::vec3(0.0, 1.0, 0.0));
+			poleTransform[i]->rotate(0.0002f, glm::vec3(0.0f, 1.0f, 0.0f));
 		}
 	}
 	if (rotateCar) {
 		for (unsigned i = 0; i < 6; i++) {
-			carTransform[i]->rotate(0.0002f, glm::vec3(0.0, 1.0, 0.0));
+			carTransform[i]->rotate(0.0002f, glm::vec3(0.0f, 1.0f, 0.0f));
 		}
 	}
 }
