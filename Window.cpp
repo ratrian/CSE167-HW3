@@ -224,15 +224,15 @@ void Window::idleCallback()
 	// Perform any necessary updates here
 	discoball->update();
 	if (rotateCarousel)
-		carouselTransform->rotate(0.0001f, glm::vec3(0.0, 1.0, 0.0));
+		carouselTransform->rotate(0.0005f, glm::vec3(0.0, 1.0, 0.0));
 	if (rotatePoll) {
 		for (unsigned i = 0; i < 6; i++) {
-			poleTransform[i]->rotate(0.0001f, glm::vec3(0.0, 1.0, 0.0));
+			poleTransform[i]->rotate(0.0005f, glm::vec3(0.0, 1.0, 0.0));
 		}
 	}
 	if (rotateCar) {
 		for (unsigned i = 0; i < 6; i++) {
-			carTransform[i]->rotate(0.0001f, glm::vec3(0.0, 1.0, 0.0));
+			carTransform[i]->rotate(0.0005f, glm::vec3(0.0, 1.0, 0.0));
 		}
 	}
 }
