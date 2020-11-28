@@ -145,8 +145,8 @@ void Window::cleanUp()
 		delete car[i];
 	}
 
-	delete groundTransform;
 	delete carouselTransform;
+	delete groundTransform;
 	for (unsigned i = 0; i < 6; i++) {
 		delete poleTransform[i];
 		delete carTransform[i];
