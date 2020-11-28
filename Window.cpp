@@ -99,7 +99,7 @@ bool Window::initializeObjects()
 		glm::vec3 position = glm::vec3(offset.x * cos(radians) + offset.z * sin(radians), offset.y, offset.x * sin(radians) - offset.z * cos(radians));
 		poleTransform[i]->translate(position);
 		poleTransform[i]->rotate(90.0f, glm::vec3(1.0, 0.0, 0.0));
-		//poleTransform[i]->rotate(360.0f * ((i + 1.0f) / 6), glm::vec3(0.0, 1.0, 0.0));
+		poleTransform[i]->rotate(360.0f * ((i + 1.0f) / 6), glm::vec3(0.0, 1.0, 0.0));
 		pole[i] = new Geometry("cylinder.obj", 2.0, pointSize, normalColoring, poleMaterial);
 		poleTransform[i]->addChild(pole[i]);
 
