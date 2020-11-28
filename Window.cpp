@@ -27,6 +27,7 @@ Geometry* Window::carousel;
 Geometry* Window::pole[6];
 Geometry* Window::car[6];
 
+Transform* Window::groundTransform;
 Transform* Window::carouselTransform;
 Transform* Window::poleTransform[6];
 Transform* Window::carTransform[6];
@@ -89,7 +90,9 @@ bool Window::initializeObjects()
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Set up ground.
+	groundTransform = new Transform();
 	ground = new Geometry("cube.obj", 8.0f, pointSize, normalColoring, groundMaterial);
+	groundTransform->addChild(ground);
 
 	// Set up carousel.
 	carouselTransform = new Transform();
@@ -140,6 +143,7 @@ void Window::cleanUp()
 		delete car[i];
 	}
 
+	delete groundTransform;
 	delete carouselTransform;
 	for (unsigned i = 0; i < 6; i++) {
 		delete poleTransform[i];
