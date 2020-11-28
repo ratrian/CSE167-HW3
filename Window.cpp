@@ -82,7 +82,7 @@ bool Window::initializeObjects()
 	pollMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
 	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
 
-	pointLight = new PointLight(glm::vec3(-12.0, 3.0, -30.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(-12.0, 3.0, 0.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Set up carousel.
@@ -92,7 +92,7 @@ bool Window::initializeObjects()
 	carouselTransform->addChild(carousel);
 
 	// Set up rides.
-	for (unsigned i = 0; i < 6; i++) {
+	/*for (unsigned i = 0; i < 6; i++) {
 		poleTransform[i] = new Transform();
 		glm::vec3 offset = glm::vec3(0, 0, 13);
 		float radians = glm::radians(360.0f * ((i + 1.0f) / 6));
@@ -109,7 +109,7 @@ bool Window::initializeObjects()
 
 		poleTransform[i]->addChild(carTransform[i]);
 		carouselTransform->addChild(poleTransform[i]);
-	}
+	}*/
 
 	skybox = new Cube(1000);
 	discoball = new Sphere(eyePos);
@@ -248,6 +248,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glDisable(GL_CULL_FACE);
 
 	discoball->draw(shaderProgram, projection, view, glm::mat4(1.0));
+	lightSource->draw(shaderProgram, projection, view, glm::mat4(1.0));
 	carouselTransform->draw(shaderProgram, projection, view, glm::mat4(1.0));
 
 	// Gets events, including input such as keyboard and mouse or window resizing

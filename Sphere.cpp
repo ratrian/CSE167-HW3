@@ -121,8 +121,6 @@ Sphere::~Sphere()
 
 void Sphere::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view, glm::mat4 C)
 {
-    model = C * model;
-
     glUseProgram(shaderProgram);
 
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));

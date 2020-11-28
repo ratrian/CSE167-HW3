@@ -114,8 +114,6 @@ LightSource::~LightSource()
 
 void LightSource::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view, glm::mat4 C)
 {
-	model = C * model;
-
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 
