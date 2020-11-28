@@ -27,10 +27,10 @@ void Transform::update()
 
 void Transform::translate(glm::vec3 t)
 {
-	mT = mT * glm::translate(glm::mat4(1.0), t);
+	mT = glm::translate(glm::mat4(1.0), t) * mT;
 }
 
 void Transform::rotate(float rotAngle, glm::vec3 rotAxis)
 {
-	mR = mR * glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
+	mR = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis) * mR;
 }
