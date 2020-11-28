@@ -11,7 +11,7 @@ bool Window::actionLightSource = false;
 glm::vec3 Window::lastPoint;
 
 bool Window::rotateCarousel = false;
-bool Window::rotatePoll = false;
+bool Window::rotatePole = false;
 bool Window::rotateCar = false;
 
 Material* carouselMaterial;
@@ -225,7 +225,7 @@ void Window::idleCallback()
 	discoball->update();
 	if (rotateCarousel)
 		carouselTransform->rotate(0.0002f, glm::vec3(0.0, 1.0, 0.0));
-	if (rotatePoll) {
+	if (rotatePole) {
 		for (unsigned i = 0; i < 6; i++) {
 			poleTransform[i]->rotate(0.0002f, glm::vec3(0.0, 1.0, 0.0));
 		}
@@ -291,7 +291,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			rotateCarousel = !rotateCarousel;
 			break;
 		case GLFW_KEY_2:
-			rotatePoll = !rotatePoll;
+			rotatePole = !rotatePole;
 			break;
 		case GLFW_KEY_3:
 			rotateCar = !rotateCar;
