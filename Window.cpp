@@ -15,7 +15,7 @@ bool Window::rotatePoll = false;
 bool Window::rotateCar = false;
 
 Material* carouselMaterial;
-Material* pollMaterial;
+Material* poleMaterial;
 Material* carMaterial;
 
 PointLight* Window::pointLight;
@@ -78,9 +78,9 @@ bool Window::initializeObjects()
 {
 	pointSize = 30.0;
 
-	carouselMaterial = new Material(glm::vec3(0.25, 0.20725, 0.20725), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
-	pollMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
-	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
+	carouselMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
+	poleMaterial = new Material(glm::vec3(0.25, 0.20725, 0.20725), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
+	carMaterial = new Material(glm::vec3(0.1, 0.18725, 0.1745), glm::vec3(0.396, 0.74151, 0.69102), glm::vec3(0.297254, 0.30829, 0.306678), 0.1);
 
 	pointLight = new PointLight(glm::vec3(-15.0, -16.0, 0.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
@@ -100,7 +100,7 @@ bool Window::initializeObjects()
 		poleTransform[i]->translate(position);
 		poleTransform[i]->rotate(90.0f, glm::vec3(1.0, 0.0, 0.0));
 		//poleTransform[i]->rotate(360.0f * ((i + 1.0f) / 6), glm::vec3(0.0, 1.0, 0.0));
-		pole[i] = new Geometry("cylinder.obj", 2.0, pointSize, normalColoring, pollMaterial);
+		pole[i] = new Geometry("cylinder.obj", 2.0, pointSize, normalColoring, poleMaterial);
 		poleTransform[i]->addChild(pole[i]);
 
 		carTransform[i] = new Transform();
@@ -120,7 +120,7 @@ bool Window::initializeObjects()
 void Window::cleanUp()
 {
 	delete carouselMaterial;
-	delete pollMaterial;
+	delete poleMaterial;
 	delete carMaterial;
 
 	delete pointLight;
