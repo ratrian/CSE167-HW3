@@ -14,21 +14,21 @@ bool Window::rotateCarousel = false;
 bool Window::rotatePole = false;
 bool Window::rotateCar = false;
 
-Material* groundMaterial;
 Material* carouselMaterial;
+Material* groundMaterial;
 Material* poleMaterial;
 Material* carMaterial;
 
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
-Geometry* Window::ground;
 Geometry* Window::carousel;
+Geometry* Window::ground;
 Geometry* Window::pole[6];
 Geometry* Window::car[6];
 
-Transform* Window::groundTransform;
 Transform* Window::carouselTransform;
+Transform* Window::groundTransform;
 Transform* Window::poleTransform[6];
 Transform* Window::carTransform[6];
 
@@ -80,25 +80,27 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects()
 {
 	pointSize = 30.0;
-
-	groundMaterial = new Material(glm::vec3(0.1, 0.18725, 0.1745), glm::vec3(0.396, 0.74151, 0.69102), glm::vec3(0.297254, 0.30829, 0.306678), 0.1);
+	
 	carouselMaterial = new Material(glm::vec3(0.1745, 0.01175, 0.01175), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	groundMaterial = new Material(glm::vec3(0.1, 0.18725, 0.1745), glm::vec3(0.396, 0.74151, 0.69102), glm::vec3(0.297254, 0.30829, 0.306678), 0.1);
 	poleMaterial = new Material(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
 	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
 	
 	pointLight = new PointLight(glm::vec3(-14.5, -16.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
-	// Set up ground.
-	groundTransform = new Transform();
-	ground = new Geometry("cube.obj", 8.0f, pointSize, normalColoring, groundMaterial);
-	groundTransform->addChild(ground);
-
 	// Set up carousel.
 	carouselTransform = new Transform();
 	carouselTransform->translate(glm::vec3(0.0, -4.0, 0.0));
 	carousel = new Geometry("cone.obj", 3.0f, pointSize, normalColoring, carouselMaterial);
 	carouselTransform->addChild(carousel);
+
+	// Set up ground.
+	groundTransform = new Transform();
+	groundTransform->translate(glm::vec3(0.0, 3.0, 0.0));
+	ground = new Geometry("cube.obj", 35.0f, pointSize, normalColoring, groundMaterial);
+	groundTransform->addChild(ground);
+	carouselTransform->addChild(groundTransform);
 
 	// Set up rides.
 	for (unsigned i = 0; i < 6; i++) {
@@ -262,7 +264,6 @@ void Window::displayCallback(GLFWwindow* window)
 	discoball->draw(shaderProgram, projection, view, glm::mat4(1.0));
 	lightSource->draw(shaderProgram, projection, view, glm::mat4(1.0));
 	carouselTransform->draw(shaderProgram, projection, view, glm::mat4(1.0));
-	//ground->draw(shaderProgram, projection, view, glm::mat4(1.0));
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
