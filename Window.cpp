@@ -82,7 +82,7 @@ bool Window::initializeObjects()
 	pollMaterial = new Material(glm::vec3(0.19225, 0.19225, 0.19225), glm::vec3(0.50754, 0.50754, 0.50754), glm::vec3(0.508273, 0.508273, 0.508273), 0.4);
 	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
 
-	pointLight = new PointLight(glm::vec3(-12.0, 3.0, 0.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(-15.0, -16.0, 0.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Set up carousel.
@@ -224,15 +224,15 @@ void Window::idleCallback()
 	// Perform any necessary updates here
 	discoball->update();
 	if (rotateCarousel)
-		carouselTransform->update();
+		carouselTransform->rotate(0.0001f, glm::vec3(0.0, 1.0, 0.0));
 	if (rotatePoll) {
 		for (unsigned i = 0; i < 6; i++) {
-			poleTransform[i]->update();
+			poleTransform[i]->rotate(0.0001f, glm::vec3(0.0, 1.0, 0.0));
 		}
 	}
 	if (rotateCar) {
 		for (unsigned i = 0; i < 6; i++) {
-			carTransform[i]->update();
+			carTransform[i]->rotate(0.0001f, glm::vec3(0.0, 1.0, 0.0));
 		}
 	}
 }
