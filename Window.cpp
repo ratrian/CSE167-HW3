@@ -10,6 +10,8 @@ bool Window::actionSkybox = true;
 bool Window::actionLightSource = false;
 glm::vec3 Window::lastPoint;
 
+bool Window::carouselView = false;
+
 bool Window::rotateCarousel = false;
 bool Window::rotatePole = false;
 bool Window::rotateCar = false;
@@ -46,6 +48,9 @@ glm::vec3 Window::eyePos(0, 0, 20);			// Camera position.
 glm::vec3 Window::lookAtPoint(0, 0, 0);		// The point we are looking at.
 glm::vec3 Window::upVector(0, 1, 0);		// The up direction of the camera.
 glm::mat4 Window::view = glm::lookAt(Window::eyePos, Window::lookAtPoint, Window::upVector);
+
+glm::vec3 Window::carouselPos(0, -6.6, 0);
+glm::vec3 Window::carouselLookAtPoint(0, 0, 20);
 
 // Shader Program ID
 GLuint Window::shaderProgram;
@@ -240,6 +245,10 @@ void Window::idleCallback()
 	if (rotateCarousel) {
 		carouselTransform->update();
 		groundTransform->rotate(-0.0002f, glm::vec3(0.0f, 1.0f, 0.0f));
+		carouselPos = glm::vec3(glm::rotate(glm::mat4(1.0f), 0.0002f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(carouselPos, 1));
+		carouselLookAtPoint = glm::vec3(glm::rotate(glm::mat4(1.0f), glm::degrees(0.0002f), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(carouselLookAtPoint, 1));
+		if (carouselView)
+			view = glm::lookAt(carouselPos, carouselLookAtPoint, upVector);
 	}
 	if (rotatePole) {
 		for (unsigned i = 0; i < 6; i++) {
@@ -304,19 +313,21 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			glfwSetWindowShouldClose(window, GL_TRUE);				
 			break;
 
-		// switch between the cube and the cube Geometry
-		case GLFW_KEY_F1:
-			actionSkybox = true;
-			actionLightSource = false;
+		case GLFW_KEY_V:
+			carouselView = !carouselView;
+			if (carouselView)
+			{
+				actionSkybox = false;
+				view = glm::lookAt(carouselPos, carouselLookAtPoint, upVector);
+			}
+			else
+			{
+				actionSkybox = true;
+				view = glm::lookAt(eyePos, lookAtPoint, upVector);
+			}
 			break;
-		case GLFW_KEY_F2:
-			actionSkybox = false;
-			actionLightSource = true;
-			break;
-		case GLFW_KEY_F3:
-			actionSkybox = true;
-			actionLightSource = true;
-			break;
+		case GLFW_KEY_L:
+			actionLightSource = !actionLightSource;
 		case GLFW_KEY_1:
 			rotateCarousel = !rotateCarousel;
 			break;

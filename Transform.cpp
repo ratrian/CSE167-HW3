@@ -32,5 +32,5 @@ void Transform::translate(glm::vec3 t)
 
 void Transform::rotate(float rotAngle, glm::vec3 rotAxis)
 {
-	mR = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis) * mR;
+	mR = glm::rotate(glm::mat4(1.0f), glm::degrees(rotAngle), rotAxis) * mR;
 }

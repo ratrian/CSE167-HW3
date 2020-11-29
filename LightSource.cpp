@@ -140,7 +140,7 @@ void LightSource::update()
 void LightSource::orbit(glm::vec3 direction, float rotAngle, glm::vec3 rotAxis)
 {
 	glm::mat4 mT = glm::translate(glm::mat4(1.0), direction);
-	glm::mat4 mR = glm::rotate(glm::mat4(1.0), glm::degrees(rotAngle), rotAxis);
+	glm::mat4 mR = glm::rotate(glm::mat4(1.0f), glm::degrees(rotAngle), rotAxis);
 	model = mT * model;
 	model = mR * model;
 	pointLight->orbit(direction, rotAngle, rotAxis);

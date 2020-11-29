@@ -18,7 +18,7 @@ public:
 	static int height;
 	static const char* windowTitle;
 
-	static bool activated, actionSkybox, actionLightSource, rotateCarousel, rotatePole, rotateCar;
+	static bool activated, actionSkybox, actionLightSource, carouselView, rotateCarousel, rotatePole, rotateCar;
 	static glm::vec3 lastPoint;
 
 	static PointLight* pointLight;
@@ -42,7 +42,7 @@ public:
 	// Camera Matrices
 	static glm::mat4 projection;
 	static glm::mat4 view;
-	static glm::vec3 eyePos, lookAtPoint, upVector;
+	static glm::vec3 eyePos, lookAtPoint, carouselPos, carouselLookAtPoint, upVector;
 
 	// Shader Program ID
 	static GLuint shaderProgram;
