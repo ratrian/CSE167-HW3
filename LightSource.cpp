@@ -92,8 +92,8 @@ LightSource::LightSource(std::string objFilename, PointLight* pointLight) : poin
 
 	glBindBuffer(GL_ARRAY_BUFFER, NBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), normals.data(), GL_STATIC_DRAW);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 
 	// Generate EBO, bind the EBO to the bound VAO and send the data
 	glGenBuffers(1, &EBO);
@@ -123,8 +123,9 @@ void LightSource::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 vie
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(currModel));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-	pointLight->sendLightToShader(shaderProgram);
+	glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 0.0);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawSphere"), 1.0);
+	pointLight->sendLightToShader(shaderProgram);
 
 	// Bind the VAO
 	glBindVertexArray(VAO);
