@@ -7,7 +7,7 @@
 // The vertex shader gets called once per vertex.
 
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec2 textcoord;
+layout (location = 1) in vec2 texcoord;
 layout (location = 2) in vec3 normal;
 
 // Uniform variables can be updated by fetching their location and passing values to that location
@@ -20,6 +20,7 @@ uniform float pointSize;
 // The default output, gl_Position, should be assigned something. You can define as many
 // extra outputs as you need.
 out vec3 posOutput;
+out vec2 texcoordOutput;
 out vec3 normalOutput;
 
 void main()
@@ -28,5 +29,6 @@ void main()
     posOutput = vec3(model * vec4(position, 1.0));
     gl_Position = projection * view * vec4(posOutput, 1.0);
     gl_PointSize = pointSize - gl_Position.z;
+    texcoordOutput = texcoord;
     normalOutput = mat3(transpose(inverse(model))) * normal;
 }
