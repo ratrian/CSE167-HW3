@@ -313,6 +313,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			glfwSetWindowShouldClose(window, GL_TRUE);				
 			break;
 
+		case GLFW_KEY_L:
+			actionLightSource = !actionLightSource;
 		case GLFW_KEY_V:
 			carouselView = !carouselView;
 			if (carouselView)
@@ -326,8 +328,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				view = glm::lookAt(eyePos, lookAtPoint, upVector);
 			}
 			break;
-		case GLFW_KEY_L:
-			actionLightSource = !actionLightSource;
 		case GLFW_KEY_1:
 			rotateCarousel = !rotateCarousel;
 			break;
