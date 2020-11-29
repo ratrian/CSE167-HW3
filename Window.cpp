@@ -314,7 +314,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			break;
 
 		case GLFW_KEY_L:
+			actionSkybox = !actionSkybox;
 			actionLightSource = !actionLightSource;
+			break;
 		case GLFW_KEY_V:
 			carouselView = !carouselView;
 			if (carouselView)
