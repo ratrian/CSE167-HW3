@@ -119,15 +119,11 @@ Sphere::~Sphere()
     glDeleteVertexArrays(1, &vao);
 }
 
-void Sphere::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view, glm::mat4 C)
+void Sphere::draw(GLuint shaderProgram, glm::mat4 C)
 {
     glm::mat4 currModel = C * model;
 
-    glUseProgram(shaderProgram);
-
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(currModel));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "cameraPos"), 1, GL_FALSE, glm::value_ptr(eyePos));
     glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 1.0);
 
@@ -140,7 +136,6 @@ void Sphere::draw(GLuint shaderProgram, glm::mat4 projection, glm::mat4 view, gl
     glDrawElements(GL_QUADS, numsToDraw, GL_UNSIGNED_INT, NULL);
 
     glBindVertexArray(0);
-    glUseProgram(0);
 }
 
 void Sphere::update()

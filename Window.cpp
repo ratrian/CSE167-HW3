@@ -83,7 +83,7 @@ bool Window::initializeObjects()
 	
 	carouselMaterial = new Material(glm::vec3(0.1745, 0.01175, 0.01175), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	groundMaterial = new Material(glm::vec3(0.1, 0.18725, 0.1745), glm::vec3(0.396, 0.74151, 0.69102), glm::vec3(0.297254, 0.30829, 0.306678), 0.1);
-	poleMaterial = new Material(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
+	poleMaterial = new Material(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
 	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
 	
 	pointLight = new PointLight(glm::vec3(-8.5, -12.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
@@ -262,10 +262,24 @@ void Window::displayCallback(GLFWwindow* window)
 	glCullFace(GL_BACK);
 	skybox->draw(view, projection, skyboxShaderProgram);
 	glDisable(GL_CULL_FACE);
+ 
+	glUseProgram(shaderProgram);
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	discoball->draw(shaderProgram, glm::mat4(1.0));
+	glUseProgram(0);
 
-	discoball->draw(shaderProgram, projection, view, glm::mat4(1.0));
-	lightSource->draw(shaderProgram, projection, view, glm::mat4(1.0));
-	carouselTransform->draw(shaderProgram, projection, view, glm::mat4(1.0));
+	glUseProgram(shaderProgram);
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	lightSource->draw(shaderProgram, glm::mat4(1.0));
+	glUseProgram(0);
+
+	glUseProgram(shaderProgram);
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	carouselTransform->draw(shaderProgram, glm::mat4(1.0));
+	glUseProgram(0);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
