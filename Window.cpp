@@ -401,7 +401,7 @@ void Window::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 		view = glm::lookAt(eyePos, lookAtPoint, upVector);
 	}
 	if (actionLightSource)
-		lightSource->move(glm::vec3(yOffset * 0.01));
+		lightSource->translate(glm::vec3(yOffset * 0.01));
 }
 
 glm::vec3 Window::trackBallMapping(double xPos, double yPos)

@@ -22,7 +22,7 @@ public:
 	void sendLightToShader(GLuint shader);
 	glm::vec3 getPos();
 	void orbit(glm::vec3 direction, float rotAngle, glm::vec3 rotAxis);
-	void move(glm::vec3 t);
+	void translate(glm::vec3 t);
 };
 
 #endif

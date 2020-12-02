@@ -35,7 +35,7 @@ public:
 	void draw(GLuint shaderProgram, glm::mat4 C);
 	void update();
 	void orbit(glm::vec3 direction, float rotAngle, glm::vec3 rotAxis);
-	void move(glm::vec3 t);
+	void translate(glm::vec3 t);
 };
 
 #endif
