@@ -2,9 +2,7 @@
 #define _GEOMETRY_H_
 
 #include "Node.h"
-
 #include "Material.h"
-#include "LightSource.h"
 
 #include <string>
 #include <vector>

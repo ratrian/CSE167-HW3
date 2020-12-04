@@ -3,11 +3,11 @@
 
 #include "main.h"
 #include "shader.h"
-#include "Object.h"
+#include "LightSource.h"
+#include "Transform.h"
+#include "Geometry.h"
 #include "Cube.h"
 #include "Sphere.h"
-#include "Geometry.h"
-#include "Transform.h"
 
 class Window
 {
