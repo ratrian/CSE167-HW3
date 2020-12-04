@@ -2,7 +2,7 @@
 
 uniform float drawDiscoball;
 uniform float normalColoring;
-uniform float drawSphere;
+uniform float drawLightSource;
 
 uniform vec3 ambient;
 uniform vec3 diffuse;
@@ -40,14 +40,14 @@ void main()
     {
         vec3 norm = normalize(normalOutput);
 
-        if (drawSphere == 1.0)
+        if (drawLightSource == 1.0)
         {
             if (normalColoring == 1.0)
                 fragColor = vec4(vec3(0.0), 1.0);
             else if (normalColoring == 0.0)
                 fragColor = vec4(lightCol, 1.0);
         }
-        else if (drawSphere == 0.0)
+        else if (drawLightSource == 0.0)
         {
             if (normalColoring == 1.0)
             {

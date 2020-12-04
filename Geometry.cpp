@@ -207,6 +207,7 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 	glUniform1f(glGetUniformLocation(shaderProgram, "pointSize"), pointSize);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 0.0);
 	glUniform1f(glGetUniformLocation(shaderProgram, "normalColoring"), normalColoring);
+	glUniform1f(glGetUniformLocation(shaderProgram, "drawLightSource"), 0.0);
 	material->sendMatToShader(shaderProgram);
 
 	// Bind the VAO

@@ -150,6 +150,7 @@ void Cube::draw(const glm::mat4& view, const glm::mat4& projection, GLuint shade
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	// Unbind the VAO and shader program

@@ -119,7 +119,7 @@ void LightSource::draw(GLuint shaderProgram, glm::mat4 C)
 	// Get the shader variable locations and send the uniform data to the shader 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(currModel));
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 0.0);
-	glUniform1f(glGetUniformLocation(shaderProgram, "drawSphere"), 1.0);
+	glUniform1f(glGetUniformLocation(shaderProgram, "drawLightSource"), 1.0);
 	pointLight->sendLightToShader(shaderProgram);
 
 	// Bind the VAO
