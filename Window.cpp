@@ -162,6 +162,8 @@ void Window::cleanUp()
 
 	// Delete the shader program.
 	glDeleteProgram(shaderProgram);
+	// Delete the skybox shader program.
+	glDeleteProgram(skyboxShaderProgram);
 }
 
 GLFWwindow* Window::createWindow(int width, int height)
