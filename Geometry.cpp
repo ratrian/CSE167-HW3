@@ -214,7 +214,7 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 	glBindVertexArray(VAO);
 
 	// Draw the points using triangles, indexed with the EBO
-	glDrawElements(GL_TRIANGLES, sizeof(glm::vec3) * points.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 3 * indices.size(), GL_UNSIGNED_INT, 0);
 
 	// Unbind the VAO and shader program
 	glBindVertexArray(0);
