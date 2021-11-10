@@ -75,7 +75,11 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir)
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
     // Attenuation
     float distance = length(lightPos - fragPos);
-    float attenuation = 1.0f / (lightAtten.x + lightAtten.y * distance + lightAtten.z * distance * distance);
+    float attenuation = lightAtten.x + lightAtten.y * distance + lightAtten.z * distance * distance;
 
-    return (ambient * lightCol.x + diffuse * diff * lightCol.y * attenuation + specular * spec * lightCol.z * attenuation);
+    vec3 result;
+    result.x = (lightCol.x / attenuation) * (ambient.x + diff * diffuse.x + spec * specular.x);
+    result.y = (lightCol.y / attenuation) * (ambient.y + diff * diffuse.y + spec * specular.y);
+    result.z = (lightCol.z / attenuation) * (ambient.z + diff * diffuse.y + spec * specular.z);
+    return result;
 }
